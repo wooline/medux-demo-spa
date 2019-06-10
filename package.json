@@ -1,0 +1,46 @@
+{
+  "name": "medux-demo-spa",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node build/start.js",
+    "build": "node build/build.js"
+  },
+  "repository": "https://github.com/wooline/medux-demo-spa",
+  "homepage": "https://github.com/wooline/medux-demo-spa",
+  "author": "wooline <wooline@qq.com>",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=9.0.0"
+  },
+  "browserslist": [
+    "ie >= 11"
+  ],
+  "devServer": {
+    "url": "http://localhost:7445",
+    "mock": true,
+    "proxy": {
+      "/ajax/**": {
+        "target": "http://localhost:7446/",
+        "secure": false,
+        "changeOrigin": true
+      }
+    }
+  },
+  "dependencies": {
+    "@medux/react": "0.0.22",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "antd-mobile": "^2.2.13",
+    "babel-plugin-import": "^1.12.0",
+    "deep-extend": "^0.6.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@medux/dev-utils": "0.0.22",
+    "@medux/dev-pkg": "0.0.22",
+    "typescript": "~3.4.5"
+  }
+}
