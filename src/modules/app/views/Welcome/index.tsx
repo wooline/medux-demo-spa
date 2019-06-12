@@ -1,11 +1,12 @@
-import React from 'react';
-import {connect, DispatchProp} from 'react-redux';
+import './index.less';
+
+import {DispatchProp, connect} from 'react-redux';
 import {StartupPageConfig, StartupStep} from 'entity/global';
+
+import {ModuleNames} from 'modules/names';
+import React from 'react';
 import {RootState} from 'modules';
 import thisModule from 'modules/app/facade';
-import {ModuleNames} from 'modules/names';
-
-import './index.less';
 
 interface Props extends DispatchProp {
   startupStep: StartupStep;

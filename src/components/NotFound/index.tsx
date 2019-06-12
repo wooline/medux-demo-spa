@@ -1,6 +1,6 @@
-import React from 'react';
-
 import './index.less';
+
+import React from 'react';
 
 const NotFound: React.SFC<{}> = () => (
   <div className="comp-NotFound">

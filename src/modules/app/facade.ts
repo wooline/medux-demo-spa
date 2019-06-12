@@ -1,6 +1,7 @@
+import {ModelActions, State} from './model';
+
 import {ModuleNames} from 'modules/names';
 import {exportFacade} from '@medux/core';
-import {ModelActions, State} from './model';
 
 export type ModelState = State;
 

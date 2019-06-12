@@ -1,5 +1,5 @@
-import request from 'common/request';
 import {ProjectConfig} from 'entity/global';
+import request from 'common/request';
 
 export class API {
   public getSettings() {

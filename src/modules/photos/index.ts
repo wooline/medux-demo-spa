@@ -1,7 +1,9 @@
 import {ModelHandlers, initModelState} from './model';
 
+import Details from './views/Details';
+import List from './views/List';
 import Main from './views/Main';
 import {ModuleNames} from 'modules/names';
 import {exportModule} from '@medux/react';
 
-export default exportModule(ModuleNames.app, initModelState, ModelHandlers, {Main});
+export default exportModule(ModuleNames.photos, initModelState, ModelHandlers, {Main, Details, List});

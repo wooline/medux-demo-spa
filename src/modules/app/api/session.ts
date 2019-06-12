@@ -1,5 +1,6 @@
-import request from 'common/request';
 import {CurUser, LoginRequest, LoginResponse} from 'entity/session';
+
+import request from 'common/request';
 
 export class API {
   public getCurUser() {

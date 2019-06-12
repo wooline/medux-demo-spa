@@ -1,13 +1,15 @@
-import {Toast} from 'antd-mobile';
-import {CustomError} from 'common/Errors';
-import {ProjectConfig, StartupStep} from 'entity/global';
-import {CurUser} from 'entity/session';
-import {RootState} from 'modules';
-import {ModuleNames} from 'modules/names';
-import {ActionTypes, BaseModelHandlers, effect, LoadingState, reducer, routerActions} from '@medux/core';
-import {Actions, BaseModelState} from '@medux/core/types/export';
 import * as sessionService from './api/session';
 import * as settingsService from './api/settings';
+
+import {ActionTypes, BaseModelHandlers, LoadingState, effect, reducer, routerActions} from '@medux/core';
+import {Actions, BaseModelState} from '@medux/core/types/export';
+import {ProjectConfig, StartupStep} from 'entity/global';
+
+import {CurUser} from 'entity/session';
+import {CustomError} from 'common/Errors';
+import {ModuleNames} from 'modules/names';
+import {RootState} from 'modules';
+import {Toast} from 'antd-mobile';
 
 // 定义本模块的State类型
 export interface State extends BaseModelState {
@@ -35,7 +37,7 @@ export const initModelState: State = {
 };
 
 // 定义本模块的Handlers
-export class ModuleHandlers extends BaseModelHandlers<State, RootState> {
+export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   @reducer
   public putStartup(startupStep: StartupStep): State {
     return {...this.state, startupStep};
@@ -95,4 +97,4 @@ export class ModuleHandlers extends BaseModelHandlers<State, RootState> {
 }
 
 // 导出本模块的Actions
-export type ModelActions = Actions<ModuleHandlers>;
+export type ModelActions = Actions<ModelHandlers>;

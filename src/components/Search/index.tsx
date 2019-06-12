@@ -1,6 +1,8 @@
-import {Button, InputItem, Toast} from 'antd-mobile';
-import React from 'react';
 import './index.less';
+
+import {Button, InputItem, Toast} from 'antd-mobile';
+
+import React from 'react';
 
 interface Props {
   onClose: () => void;

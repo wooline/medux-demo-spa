@@ -21,6 +21,7 @@ module.exports = {
   ].filter(Boolean),
   plugins: [
     ['import', {libraryName: 'antd-mobile', style: 'css'}],
+    '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-proposal-decorators', {legacy: false, decoratorsBeforeExport: true}],
     ['@babel/plugin-proposal-class-properties', {loose: true}],
     '@babel/plugin-proposal-object-rest-spread',
