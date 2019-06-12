@@ -1,15 +1,12 @@
-// import * as app from 'modules/app';
+import * as app from 'modules/app';
 
 import {RootState as BaseState} from '@medux/react';
 import {ModuleNames} from './names';
 
-function defineModuleGetter<T>(getter: T): T {
-  return getter;
-}
 // 定义模块的加载方案，同步或者异步均可
-export const moduleGetter = defineModuleGetter({
+export const moduleGetter = {
   [ModuleNames.app]: () => {
-    return import(/* webpackChunkName: "app" */ 'modules/app');
+    return app;
   },
   [ModuleNames.comments]: () => {
     return import(/* webpackChunkName: "comments" */ 'modules/comments');
@@ -17,7 +14,7 @@ export const moduleGetter = defineModuleGetter({
   [ModuleNames.photos]: () => {
     return import(/* webpackChunkName: "photos" */ 'modules/photos');
   },
-});
+};
 
 export type ModuleGetter = typeof moduleGetter;
 

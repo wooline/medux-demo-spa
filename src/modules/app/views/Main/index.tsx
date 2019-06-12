@@ -67,8 +67,8 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const app = state.app!;
   return {
-    showLoginPop: Boolean(app.showLoginPop && !app.curUser!.hasLogin),
-    showNotFoundPop: Boolean(app.showNotFoundPop),
+    showLoginPop: !!(app.showLoginPop && !app.curUser!.hasLogin),
+    showNotFoundPop: !!app.showNotFoundPop,
     startupStep: app.startupStep,
     globalLoading: app.loading.global,
   };
