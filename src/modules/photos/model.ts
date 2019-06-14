@@ -1,15 +1,18 @@
 import {ActionTypes, BaseModelHandlers, effect, loadModel} from '@medux/core';
-// import {Actions, BaseModuleHandlers, BaseModuleState, VIEW_INVALID, effect, exportModel} from 'react-coat';
-import {Actions, BaseModelState} from '@medux/core/types/export';
 import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/photo';
-import {RootState, moduleGetter} from 'modules';
+import {RootState, actions, moduleGetter} from 'modules';
 import {isForceRefresh, parseQuery} from 'common/routers';
 
+import {BaseModelState} from '@medux/core/types/export';
 import {ModuleNames} from 'modules/names';
 import api from './api';
-import commentsModule from 'modules/comments/facade';
-import {defaultListSearch} from './facade';
 import {equal} from 'common/utils';
+
+export const defaultListSearch: ListSearch = {
+  title: '',
+  page: 1,
+  pageSize: 10,
+};
 
 // 定义本模块的State类型
 export interface State extends BaseModelState {
@@ -34,7 +37,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     const [itemDetail] = await Promise.all([api.getItemDetail(itemDetailId), api.hitItem(itemDetailId)]);
     this.updateState({itemDetail});
     await loadModel(moduleGetter, ModuleNames.comments).then(model => model(this.store));
-    await this.dispatch(commentsModule.actions.searchList({articleType: 'photos', articleId: itemDetail.id}));
+    await this.dispatch(actions.comments.searchList({articleType: 'photos', articleId: itemDetail.id}));
   }
 
   // 兼听路由变化的 action
@@ -62,6 +65,3 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     }
   }
 }
-
-// 导出本模块的Actions
-export type ModelActions = Actions<ModelHandlers>;

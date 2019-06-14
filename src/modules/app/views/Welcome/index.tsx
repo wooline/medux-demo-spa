@@ -1,12 +1,11 @@
 import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
+import {RootState, actions} from 'modules';
 import {StartupPageConfig, StartupStep} from 'entity/global';
 
 import {ModuleNames} from 'modules/names';
 import React from 'react';
-import {RootState} from 'modules';
-import thisModule from 'modules/app/facade';
 
 interface Props extends DispatchProp {
   startupStep: StartupStep;
@@ -24,9 +23,9 @@ class Component extends React.PureComponent<Props> {
     if (nid) {
       clearInterval(nid);
     }
-    this.props.dispatch(thisModule.actions.putStartup(StartupStep.startupCountEnd));
+    this.props.dispatch(actions.app.putStartup(StartupStep.startupCountEnd));
     setTimeout(() => {
-      this.props.dispatch(thisModule.actions.putStartup(StartupStep.startupAnimateEnd));
+      this.props.dispatch(actions.app.putStartup(StartupStep.startupAnimateEnd));
     }, 1000);
   };
   public render() {
@@ -69,10 +68,10 @@ class Component extends React.PureComponent<Props> {
     const initLoading = document.getElementById('g-init-loading');
     if (initLoading) {
       if (this.img!.naturalWidth) {
-        this.props.dispatch(thisModule.actions.putStartup(StartupStep.startupImageLoaded));
+        this.props.dispatch(actions.app.putStartup(StartupStep.startupImageLoaded));
       } else {
         this.img!.onload = () => {
-          this.props.dispatch(thisModule.actions.putStartup(StartupStep.startupImageLoaded));
+          this.props.dispatch(actions.app.putStartup(StartupStep.startupImageLoaded));
         };
         this.img!.onerror = () => {
           this.onCountEnd();

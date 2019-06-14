@@ -9,7 +9,7 @@ import {stringifyQuery, toUrl} from 'common/routers';
 
 import {ModuleNames} from 'modules/names';
 import React from 'react';
-import {defaultListSearch} from 'modules/photos/facade';
+import {defaultListSearch} from '../../model';
 import {findDOMNode} from 'react-dom';
 import {loadView} from '@medux/react';
 import {routerActions} from 'connected-react-router';

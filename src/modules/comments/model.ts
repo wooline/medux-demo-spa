@@ -1,11 +1,18 @@
-import {Actions, BaseModelState} from '@medux/core/types/export';
 import {BaseModelHandlers, effect, reducer} from '@medux/core';
 import {ItemCreateData, ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/comment';
 
+import {BaseModelState} from '@medux/core/types/export';
 import {RootState} from 'modules';
 import {Toast} from 'antd-mobile';
 import api from './api';
-import {defaultListSearch} from './facade';
+
+export const defaultListSearch: ListSearch = {
+  articleType: '',
+  articleId: '',
+  isNewest: false,
+  page: 1,
+  pageSize: 10,
+};
 
 // 定义本模块的State类型
 export interface State extends BaseModelState {
@@ -52,6 +59,3 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     this.updateState({itemDetail});
   }
 }
-
-// 导出本模块的Actions
-export type ModelActions = Actions<ModelHandlers>;

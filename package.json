@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "tsc && node build/start.js",
-    "build": "tsc && node build/build.js"
+    "lint": "eslint \"./src/**/*.ts\"",
+    "types": "tsc",
+    "start": "npm run lint && npm run types && node build/start.js",
+    "build": "npm run lint && npm run types && node build/build.js"
   },
   "repository": "https://github.com/wooline/medux-demo-spa",
   "homepage": "https://github.com/wooline/medux-demo-spa",
@@ -29,7 +31,7 @@
     }
   },
   "dependencies": {
-    "@medux/react": "0.0.25",
+    "@medux/react": "0.0.29",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
     "antd-mobile": "^2.2.13",
@@ -42,8 +44,8 @@
     "core-js": "~3.1.3"
   },
   "devDependencies": {
-    "@medux/dev-utils": "0.0.25",
-    "@medux/dev-pkg": "0.0.25",
+    "@medux/dev-utils": "0.0.29",
+    "@medux/dev-pkg": "0.0.29",
     "typescript": "~3.4.5"
   }
 }

@@ -1,16 +1,14 @@
 /* eslint-disable react/no-find-dom-node */
 import './index.less';
 
-import * as React from 'react';
-
 import {DispatchProp, connect} from 'react-redux';
 import {ListItem, ListSearch, ListSummary} from 'entity/comment';
+import {RootState, actions} from 'modules';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
-import {RootState} from 'modules';
+import React from 'react';
 import {findDOMNode} from 'react-dom';
-import thisModule from 'modules/comments/facade';
 
 interface StateProps {
   listSearch: ListSearch | undefined;
@@ -20,16 +18,16 @@ interface StateProps {
 let scrollTop = NaN;
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    this.props.dispatch(thisModule.actions.searchList({page}));
+    this.props.dispatch(actions.comments.searchList({page}));
   };
   private onSortChange = (isNewest: boolean) => {
-    this.props.dispatch(thisModule.actions.searchList({isNewest, page: 1}));
+    this.props.dispatch(actions.comments.searchList({isNewest, page: 1}));
   };
   private onItemClick = (id: string) => {
     // 记住当前滚动位置
     const dom = findDOMNode(this) as HTMLElement;
     scrollTop = (dom.parentNode as HTMLDivElement).scrollTop;
-    this.props.dispatch(thisModule.actions.getItemDetail(id));
+    this.props.dispatch(actions.comments.getItemDetail(id));
   };
 
   public render() {

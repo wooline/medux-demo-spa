@@ -2,9 +2,9 @@ import * as sessionService from './api/session';
 import * as settingsService from './api/settings';
 
 import {ActionTypes, BaseModelHandlers, LoadingState, effect, reducer, routerActions} from '@medux/core';
-import {Actions, BaseModelState} from '@medux/core/types/export';
 import {ProjectConfig, StartupStep} from 'entity/global';
 
+import {BaseModelState} from '@medux/core/types/export';
 import {CurUser} from 'entity/session';
 import {CustomError} from 'common/Errors';
 import {ModuleNames} from 'modules/names';
@@ -95,6 +95,3 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     });
   }
 }
-
-// 导出本模块的Actions
-export type ModelActions = Actions<ModelHandlers>;

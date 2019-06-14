@@ -2,10 +2,9 @@ import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
 import {Icon, NavBar} from 'antd-mobile';
+import {RootState, actions} from 'modules';
 
 import React from 'react';
-import {RootState} from 'modules';
-import thisModule from 'modules/app/facade';
 
 interface Props extends DispatchProp {
   showSearch: boolean;
@@ -15,7 +14,7 @@ interface Props extends DispatchProp {
 
 class Component extends React.PureComponent<Props> {
   private onShowSearch = () => {
-    this.props.dispatch(thisModule.actions.putShowSearch(!this.props.showSearch));
+    this.props.dispatch(actions.app.putShowSearch(!this.props.showSearch));
   };
 
   public render() {

@@ -1,11 +1,10 @@
 import './index.less';
 
-import * as React from 'react';
-
 import {RootState, moduleGetter} from 'modules';
 
 import Editor from '../Editor';
 import {ModuleNames} from 'modules/names';
+import React from 'react';
 import {connect} from 'react-redux';
 import {loadView} from '@medux/react';
 

@@ -6,8 +6,8 @@ import {DispatchProp, connect} from 'react-redux';
 import {LoginRequest} from 'entity/session';
 import {RCForm} from 'entity/common';
 import React from 'react';
+import {actions} from 'modules';
 import {createForm} from 'rc-form';
-import thisModule from 'modules/app/facade';
 
 interface Props extends RCForm, DispatchProp {}
 
@@ -16,7 +16,7 @@ class Component extends React.PureComponent<Props> {
     const {validateFields, getFieldError} = this.props.form;
     validateFields((errors, values: LoginRequest) => {
       if (!errors) {
-        this.props.dispatch(thisModule.actions.login(values));
+        this.props.dispatch(actions.app.login(values));
       } else {
         const errorField = Object.keys(errors)[0];
         const message = getFieldError(errorField).join(', ');

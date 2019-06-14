@@ -3,7 +3,7 @@ import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {RootState, moduleGetter} from 'modules';
+import {RootState, actions, moduleGetter} from 'modules';
 
 import BottomNav from '../BottomNav';
 import Loading from '../Loading';
@@ -17,7 +17,6 @@ import {StartupStep} from 'entity/global';
 import TopNav from '../TopNav';
 import Welcome from '../Welcome';
 import {loadView} from '@medux/react';
-import thisModule from '../../facade';
 
 const PhotosView = loadView(moduleGetter, ModuleNames.photos, 'Main');
 
@@ -30,10 +29,10 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onCloseLoginPop = () => {
-    this.props.dispatch(thisModule.actions.putShowLoginPop(false));
+    this.props.dispatch(actions.app.putShowLoginPop(false));
   };
   private onCloseNotFound = () => {
-    this.props.dispatch(thisModule.actions.putShowNotFoundPop(false));
+    this.props.dispatch(actions.app.putShowNotFoundPop(false));
   };
 
   public render() {

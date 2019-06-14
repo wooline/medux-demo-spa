@@ -2,15 +2,14 @@ import './index.less';
 
 import {Button, InputItem, Toast} from 'antd-mobile';
 import {DispatchProp, connect} from 'react-redux';
+import {RootState, actions} from 'modules';
 
 import {ModuleNames} from 'modules/names';
 import {RCForm} from 'entity/common';
 import React from 'react';
-import {RootState} from 'modules';
 import {UnauthorizedError} from 'common/Errors';
 import {createForm} from 'rc-form';
 import {errorAction} from '@medux/core';
-import thisModule from 'modules/comments/facade';
 
 interface Props extends DispatchProp, RCForm {
   hasLogin: boolean;
@@ -33,7 +32,7 @@ class Component extends React.PureComponent<Props> {
       validateFields<{content: string}>((errors, values) => {
         if (!errors) {
           const {content} = values;
-          this.props.dispatch(thisModule.actions.createItem({articleType, content, articleId, commentId}));
+          this.props.dispatch(actions.comments.createItem({articleType, content, articleId, commentId}));
         } else {
           const errorField = Object.keys(errors)[0];
           const message = getFieldError(errorField).join(', ');

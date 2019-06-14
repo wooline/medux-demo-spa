@@ -3,15 +3,14 @@ import './index.less';
 import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
 import {ListItem, ListSearch, ListSummary} from 'entity/photo';
+import {RootState, actions} from 'modules';
 import {stringifyQuery, toUrl} from 'common/routers';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
-import {RootState} from 'modules';
 import Search from 'components/Search';
-import appModule from 'modules/app/facade';
-import {defaultListSearch} from 'modules/photos/facade';
+import {defaultListSearch} from '../../model';
 import {routerActions} from 'connected-react-router';
 
 interface StateProps {
@@ -35,7 +34,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     this.props.dispatch(routerActions.push(toUrl('/photos', search)));
   };
   private onSearchClose = () => {
-    this.props.dispatch(appModule.actions.putShowSearch(false));
+    this.props.dispatch(actions.app.putShowSearch(false));
     if (this.props.listSearch!.title) {
       this.onSearch('');
     }
