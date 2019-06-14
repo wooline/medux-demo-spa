@@ -14,7 +14,7 @@ interface Props extends DispatchProp {
   config: StartupPageConfig;
 }
 
-let nid: NodeJS.Timeout;
+let nid: any;
 
 class Component extends React.PureComponent<Props> {
   private timer?: HTMLSpanElement;

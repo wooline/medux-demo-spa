@@ -1,10 +1,11 @@
-import {ActionTypes, BaseModelHandlers, effect} from '@medux/core';
+import {ActionTypes, BaseModelHandlers, effect, loadModel} from '@medux/core';
 // import {Actions, BaseModuleHandlers, BaseModuleState, VIEW_INVALID, effect, exportModel} from 'react-coat';
 import {Actions, BaseModelState} from '@medux/core/types/export';
 import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/photo';
+import {RootState, moduleGetter} from 'modules';
 import {isForceRefresh, parseQuery} from 'common/routers';
 
-import {RootState} from 'modules';
+import {ModuleNames} from 'modules/names';
 import api from './api';
 import commentsModule from 'modules/comments/facade';
 import {defaultListSearch} from './facade';
@@ -32,6 +33,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   public async getItemDetail(itemDetailId: string) {
     const [itemDetail] = await Promise.all([api.getItemDetail(itemDetailId), api.hitItem(itemDetailId)]);
     this.updateState({itemDetail});
+    await loadModel(moduleGetter, ModuleNames.comments).then(model => model(this.store));
     await this.dispatch(commentsModule.actions.searchList({articleType: 'photos', articleId: itemDetail.id}));
   }
 
