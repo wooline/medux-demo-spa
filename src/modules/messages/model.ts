@@ -1,9 +1,9 @@
 import {ActionTypes, BaseModelHandlers, effect} from '@medux/core';
-import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/photo';
-import {RootState, actions} from 'modules';
+import {ListItem, ListSearch, ListSummary} from 'entity/message';
 import {isForceRefresh, parseQuery} from 'common/routers';
 
 import {BaseModelState} from '@medux/core/types/export';
+import {RootState} from 'modules';
 import api from './api';
 import {equal} from 'common/utils';
 
@@ -18,7 +18,6 @@ export interface State extends BaseModelState {
   listSearch?: ListSearch;
   listItems?: ListItem[];
   listSummary?: ListSummary;
-  itemDetail?: ItemDetail;
 }
 
 // 定义本模块State的初始值
@@ -31,34 +30,18 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     const {listItems, listSummary} = await api.searchList(listSearch);
     this.updateState({listSearch, listItems, listSummary});
   }
-  @effect()
-  public async getItemDetail(itemDetailId: string) {
-    const [itemDetail] = await Promise.all([api.getItemDetail(itemDetailId), api.hitItem(itemDetailId)]);
-    this.updateState({itemDetail});
-    await this.dispatch(actions.comments.searchList({articleType: 'photos', articleId: itemDetail.id}));
-  }
 
   // 兼听路由变化的 action
   // 参数 null 表示不需要监控loading状态，searchList时会监控loading
   @effect(null)
   protected async [ActionTypes.F_VIEW_INVALID]() {
     const views = this.rootState.views;
-    if (views.photos && views.photos.List) {
+    if (views.messages && views.messages.List) {
       const {search, hash} = this.rootState.router.location;
       const forceRefresh = isForceRefresh(hash);
       const listSearch = parseQuery('search', search, defaultListSearch);
       if (forceRefresh || (forceRefresh === null && !equal(this.state.listSearch, listSearch))) {
         await this.dispatch(this.actions.searchList(listSearch));
-      }
-    } else if (views.photos && views.photos.Details) {
-      const {pathname, hash} = this.rootState.router.location;
-      const arr = pathname.match(/^\/photos\/(\d+)$/);
-      if (arr) {
-        const forceRefresh = isForceRefresh(hash);
-        const itemId: string = arr[1];
-        if (forceRefresh || (forceRefresh === null && (!this.state.itemDetail || this.state.itemDetail.id !== itemId))) {
-          await this.dispatch(this.actions.getItemDetail(itemId));
-        }
       }
     }
   }

@@ -18,7 +18,9 @@ import TopNav from '../TopNav';
 import Welcome from '../Welcome';
 import {loadView} from '@medux/react';
 
-const PhotosView = loadView(moduleGetter, ModuleNames.photos, 'Main');
+const PhotosMain = loadView(moduleGetter, 'photos', 'Main');
+const VideosMain = loadView(moduleGetter, 'videos', 'Main');
+const MessagesView = loadView(moduleGetter, 'messages', 'Main');
 
 interface StateProps {
   showLoginPop: boolean;
@@ -44,7 +46,9 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
             <TopNav />
             <Switch>
               <Redirect exact={true} path="/" to="/photos" />
-              <Route exact={false} path="/photos" component={PhotosView} />
+              <Route exact={false} path="/photos" component={PhotosMain} />
+              <Route exact={false} path="/videos" component={VideosMain} />
+              <Route exact={false} path="/messages" component={MessagesView} />
               <Route component={NotFound} />
             </Switch>
             <BottomNav />

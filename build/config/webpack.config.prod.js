@@ -7,7 +7,6 @@ const PostcssPxtorem = require('postcss-pxtorem');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const PostcssPresetEnv = require('postcss-preset-env');
-const StylelintPlugin = require('stylelint-webpack-plugin');
 const pathsConfig = require('./path.conifg');
 
 const conPath = path.join(pathsConfig.configPath, process.env.WEBSITE || './prod');
@@ -154,12 +153,6 @@ const config = {
       fileName: "asset-manifest.json",
       publicPath: conEnv.clientPublicPath,
     }), */
-    new StylelintPlugin({
-      configFile: path.join(pathsConfig.rootPath, './.stylelintrc.json'),
-      context: pathsConfig.srcPath,
-      files: '**/*.less',
-      syntax: 'less',
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.ProgressPlugin(),
   ],

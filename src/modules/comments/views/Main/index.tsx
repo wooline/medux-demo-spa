@@ -8,8 +8,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {loadView} from '@medux/react';
 
-const Details = loadView(moduleGetter, ModuleNames.comments, 'Details');
-const List = loadView(moduleGetter, ModuleNames.comments, 'List');
+const Details = loadView(moduleGetter, 'comments', 'Details');
+const List = loadView(moduleGetter, 'comments', 'List');
 
 interface StateProps {
   showDetail: boolean;

@@ -4,14 +4,15 @@ import React from 'react';
 import {loadView} from '@medux/react';
 import {moduleGetter} from 'modules';
 
-const Details = loadView(moduleGetter, 'photos', 'Details');
-const List = loadView(moduleGetter, 'photos', 'List');
+const List = loadView(moduleGetter, 'messages', 'List');
 
-class Component extends React.PureComponent {
+interface Props {
+  pathname: string;
+}
+class Component extends React.PureComponent<Props> {
   public render() {
     return (
       <Switch>
-        <Route exact={true} path="/photos/:id" component={Details} />
         <Route component={List} />
       </Switch>
     );
