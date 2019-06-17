@@ -1,5 +1,5 @@
 import {ActionTypes, BaseModelHandlers, effect} from '@medux/core';
-import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/photo';
+import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/video';
 import {RootState, actions} from 'modules';
 import {isForceRefresh, parseQuery} from 'common/routers';
 
@@ -35,8 +35,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   public async getItemDetail(itemDetailId: string) {
     const [itemDetail] = await Promise.all([api.getItemDetail(itemDetailId), api.hitItem(itemDetailId)]);
     this.updateState({itemDetail});
-    // await loadModel(moduleGetter, ModuleNames.comments).then(model => model(this.store));
-    await this.dispatch(actions.comments.searchList({articleType: 'photos', articleId: itemDetail.id}));
+    await this.dispatch(actions.comments.searchList({articleType: 'videos', articleId: itemDetail.id}));
   }
 
   // 兼听路由变化的 action
@@ -44,16 +43,16 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   @effect(null)
   protected async [ActionTypes.F_VIEW_INVALID]() {
     const views = this.rootState.views;
-    if (views.photos && views.photos.List) {
+    if (views.videos && views.videos.List) {
       const {search, hash} = this.rootState.router.location;
       const forceRefresh = isForceRefresh(hash);
       const listSearch = parseQuery('search', search, defaultListSearch);
       if (forceRefresh || (forceRefresh === null && !equal(this.state.listSearch, listSearch))) {
         await this.dispatch(this.actions.searchList(listSearch));
       }
-    } else if (views.photos && views.photos.Details) {
+    } else if (views.videos && views.videos.Details) {
       const {pathname, hash} = this.rootState.router.location;
-      const arr = pathname.match(/^\/photos\/(\d+)$/);
+      const arr = pathname.match(/^\/videos\/(\d+)$/);
       if (arr) {
         const forceRefresh = isForceRefresh(hash);
         const itemId: string = arr[1];

@@ -15,6 +15,7 @@ import {loadView} from '@medux/react';
 import {routerActions} from 'connected-react-router';
 
 const Comments = loadView(moduleGetter, ModuleNames.comments, 'Main');
+
 interface StateProps {
   listSearch: ListSearch | undefined;
   itemDetail: ItemDetail | undefined;

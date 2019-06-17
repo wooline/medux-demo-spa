@@ -5,4 +5,4 @@ import List from './views/List';
 import Main from './views/Main';
 import {exportModule} from '@medux/react';
 
-export default exportModule('comments', initModelState, ModelHandlers, {Main, Details, List});
+export default exportModule('videos', initModelState, ModelHandlers, {Main, Details, List});
