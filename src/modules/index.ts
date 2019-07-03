@@ -1,4 +1,4 @@
-import {RootState as BaseState} from '@medux/react';
+import {RootState as BaseState} from '@medux/react-web';
 import {exportActions} from '@medux/core';
 
 // 定义模块的加载方案，同步或者异步均可
