@@ -14,7 +14,7 @@ export interface ItemDetail extends ListItem {
 }
 
 export interface ListSearch extends BaseListSearch {
-  articleType: string;
+  articleType: 'video' | 'photo';
   articleId: string;
   isNewest: boolean;
 }

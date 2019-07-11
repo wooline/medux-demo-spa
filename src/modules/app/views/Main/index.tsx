@@ -7,7 +7,7 @@ import {RootState, actions, moduleGetter} from 'modules';
 
 import BottomNav from '../BottomNav';
 import Loading from '../Loading';
-import {LoadingState} from '@medux/core';
+import {LoadingState} from '@medux/react-web-router';
 import LoginPop from '../LoginPop';
 import {Modal} from 'antd-mobile';
 import {ModuleNames} from 'modules/names';
@@ -18,9 +18,11 @@ import TopNav from '../TopNav';
 import Welcome from '../Welcome';
 import {loadView} from '@medux/react';
 
-const PhotosMain = loadView(moduleGetter, 'photos', 'Main');
-const VideosMain = loadView(moduleGetter, 'videos', 'Main');
-const MessagesView = loadView(moduleGetter, 'messages', 'Main');
+const photosDetails = loadView(moduleGetter, 'photos', 'Details');
+const photosList = loadView(moduleGetter, 'photos', 'List');
+const videosDetails = loadView(moduleGetter, 'videos', 'Details');
+const videosList = loadView(moduleGetter, 'videos', 'List');
+const messagesList = loadView(moduleGetter, 'messages', 'List');
 
 interface StateProps {
   showLoginPop: boolean;
@@ -46,9 +48,11 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
             <TopNav />
             <Switch>
               <Redirect exact={true} path="/" to="/photos" />
-              <Route exact={false} path="/photos" component={PhotosMain} />
-              <Route exact={false} path="/videos" component={VideosMain} />
-              <Route exact={false} path="/messages" component={MessagesView} />
+              <Route exact={true} path="/photos" component={photosList} />
+              <Route exact={false} path="/photos/:itemId" component={photosDetails} />
+              <Route exact={true} path="/videos" component={videosList} />
+              <Route exact={false} path="/videos/:itemId" component={videosDetails} />
+              <Route exact={true} path="/messages" component={messagesList} />
               <Route component={NotFound} />
             </Switch>
             <BottomNav />
@@ -66,7 +70,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     );
   }
 }
-// todo document title处理
+
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const app = state.app!;
   return {

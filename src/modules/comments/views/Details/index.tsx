@@ -2,13 +2,14 @@
 import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
-import {RootState, actions} from 'modules';
 
 import {ItemDetail} from 'entity/comment';
 import {Icon as MIcon} from 'antd-mobile';
 import {ModuleNames} from 'modules/names';
 import React from 'react';
+import {RootState} from 'modules';
 import {findDOMNode} from 'react-dom';
+import {getRouteActions} from 'common/route';
 
 interface StateProps {
   itemDetail: ItemDetail | undefined;
@@ -16,7 +17,7 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onBack = () => {
-    this.props.dispatch(actions.comments.putItemDetail());
+    getRouteActions().goBack();
   };
 
   public render() {

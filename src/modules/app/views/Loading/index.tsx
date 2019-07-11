@@ -1,7 +1,7 @@
 import './index.less';
 
 import {Icon} from 'antd-mobile';
-import {LoadingState} from '@medux/core';
+import {LoadingState} from '@medux/react-web-router';
 import React from 'react';
 
 interface Props {

@@ -1,5 +1,5 @@
-import {RootState as BaseState} from '@medux/react-web';
-import {exportActions} from '@medux/core';
+import {RootState as BaseState} from '@medux/react-web-router';
+import {exportActions} from '@medux/react-web-router';
 
 // 定义模块的加载方案，同步或者异步均可
 export const moduleGetter = {

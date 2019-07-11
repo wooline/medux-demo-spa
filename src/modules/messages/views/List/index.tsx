@@ -3,14 +3,11 @@ import './index.less';
 import {DispatchProp, connect} from 'react-redux';
 import {ListItem, ListSearch, ListSummary} from 'entity/message';
 import {RootState, actions} from 'modules';
-import {stringifyQuery, toUrl} from 'common/routers';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
 import Search from 'components/Search';
-import {defaultListSearch} from '../../model';
-import {routerActions} from 'connected-react-router';
 
 interface StateProps {
   showSearch: boolean;
@@ -21,15 +18,17 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    const listSearch = {...this.props.listSearch, page};
-    const search = stringifyQuery('search', listSearch, defaultListSearch);
-    this.props.dispatch(routerActions.push(toUrl('/messages', search)));
+    console.log(page);
+    // const listSearch = {...this.props.listSearch, page};
+    // const search = stringifyQuery('search', listSearch, defaultListSearch);
+    // historyActions.push(toUrl('/messages', search));
   };
 
   private onSearch = (title: string) => {
-    const listSearch = {...this.props.listSearch, title, page: 1};
-    const search = stringifyQuery('search', listSearch, defaultListSearch);
-    this.props.dispatch(routerActions.push(toUrl('/messages', search)));
+    console.log(title);
+    // const listSearch = {...this.props.listSearch, title, page: 1};
+    // const search = stringifyQuery('search', listSearch, defaultListSearch);
+    // historyActions.push(toUrl('/messages', search));
   };
 
   private onSearchClose = () => {

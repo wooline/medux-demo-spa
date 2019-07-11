@@ -3,15 +3,12 @@ import './index.less';
 import {DispatchProp, connect} from 'react-redux';
 import {ItemDetail, ListSearch} from 'entity/video';
 import {RootState, moduleGetter} from 'modules';
-import {stringifyQuery, toUrl} from 'common/routers';
 
 import {Icon as MIcon} from 'antd-mobile';
 import {ModuleNames} from 'modules/names';
 import React from 'react';
-import {defaultListSearch} from '../../model';
 import {findDOMNode} from 'react-dom';
 import {loadView} from '@medux/react';
-import {routerActions} from 'connected-react-router';
 
 const Comments = loadView(moduleGetter, 'comments', 'Main');
 
@@ -22,9 +19,9 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onClose = () => {
-    const listSearch = {...this.props.listSearch};
-    const search = stringifyQuery('search', listSearch, defaultListSearch);
-    this.props.dispatch(routerActions.push(toUrl('/videos', search)));
+    // const listSearch = {...this.props.listSearch};
+    // const search = stringifyQuery('search', listSearch, defaultListSearch);
+    // this.props.dispatch(routerActions.push(toUrl('/videos', search)));
   };
 
   public render() {

@@ -1,6 +1,7 @@
 import './index.less';
 
 import {RootState, moduleGetter} from 'modules';
+import {Route, Switch} from 'react-router-dom';
 
 import Editor from '../Editor';
 import {ModuleNames} from 'modules/names';
@@ -19,7 +20,12 @@ class Component extends React.PureComponent<StateProps> {
   public render() {
     return (
       <div className={`${ModuleNames.comments}`}>
-        <div className="wrap">{this.props.showDetail ? <Details /> : <List />}</div>
+        <div className="wrap">
+          <Switch>
+            <Route exact={true} path="/:articleType/:articleId" component={List} />
+            <Route exact={false} path="/:articleType/:articleId/:itemId" component={Details} />
+          </Switch>
+        </div>
         <Editor />
       </div>
     );

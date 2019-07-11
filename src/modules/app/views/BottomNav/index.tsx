@@ -2,22 +2,23 @@ import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
+import {ViewNames, getRouteActions} from 'common/route';
 
 import React from 'react';
 import {RootState} from 'modules';
 import {TabBar} from 'antd-mobile';
 import {UnauthorizedError} from 'common/Errors';
-import {errorAction} from '@medux/core';
-import {routerActions} from 'connected-react-router';
+import {errorAction} from '@medux/react-web-router';
+import {uniqueKey} from 'common/utils';
 
 interface Props extends DispatchProp {
-  pathname: string;
+  views: RootState['route']['data']['views'];
   hasLogin: boolean;
 }
 
 class Component extends React.PureComponent<Props> {
   public render() {
-    const {pathname, dispatch} = this.props;
+    const {views, dispatch} = this.props;
 
     return (
       <div className="app-BottomNav g-doc-width">
@@ -27,9 +28,9 @@ class Component extends React.PureComponent<Props> {
             selectedIcon={<Icon type={IconClass.PICTURE} />}
             title="组团"
             key="photos"
-            selected={pathname.indexOf('/photos') === 0}
+            selected={!!views.photos}
             onPress={() => {
-              dispatch(routerActions.push('/photos#refresh=true'));
+              getRouteActions().push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {_listKey: uniqueKey()}}});
             }}
           />
           <TabBar.Item
@@ -37,9 +38,9 @@ class Component extends React.PureComponent<Props> {
             key="videos"
             icon={<Icon type={IconClass.LIVE} />}
             selectedIcon={<Icon type={IconClass.LIVE} />}
-            selected={pathname.indexOf('/videos') === 0}
+            selected={!!views.videos}
             onPress={() => {
-              dispatch(routerActions.push('/videos#refresh=true'));
+              getRouteActions().push({paths: [ViewNames.appMain, ViewNames.videosList], params: {videos: {_listKey: uniqueKey()}}});
             }}
           />
           <TabBar.Item
@@ -47,12 +48,12 @@ class Component extends React.PureComponent<Props> {
             selectedIcon={<Icon type={IconClass.MESSAGE} />}
             title="消息"
             key="messages"
-            selected={pathname.indexOf('/messages') === 0}
+            selected={!!views.messages}
             onPress={() => {
               if (!this.props.hasLogin) {
-                this.props.dispatch(errorAction(new UnauthorizedError()));
+                dispatch(errorAction(new UnauthorizedError()));
               } else {
-                dispatch(routerActions.push('/messages#refresh=true'));
+                getRouteActions().push({paths: [ViewNames.appMain, ViewNames.messagesList], params: {messages: {_listKey: uniqueKey()}}});
               }
             }}
           />
@@ -64,7 +65,7 @@ class Component extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    pathname: state.router.location.pathname,
+    views: state.route.data.views,
     hasLogin: state.app!.curUser!.hasLogin,
   };
 };

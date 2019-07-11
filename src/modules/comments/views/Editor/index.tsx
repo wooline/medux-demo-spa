@@ -9,7 +9,7 @@ import {RCForm} from 'entity/common';
 import React from 'react';
 import {UnauthorizedError} from 'common/Errors';
 import {createForm} from 'rc-form';
-import {errorAction} from '@medux/core';
+import {errorAction} from '@medux/react-web-router';
 
 interface Props extends DispatchProp, RCForm {
   hasLogin: boolean;
