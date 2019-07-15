@@ -1,29 +1,24 @@
 import './index.less';
 
-import {RootState, moduleGetter} from 'modules';
 import {Route, Switch} from 'react-router-dom';
 
 import Editor from '../Editor';
 import {ModuleNames} from 'modules/names';
 import React from 'react';
-import {connect} from 'react-redux';
 import {loadView} from '@medux/react';
+import {moduleGetter} from 'modules';
 
 const Details = loadView(moduleGetter, 'comments', 'Details');
 const List = loadView(moduleGetter, 'comments', 'List');
 
-interface StateProps {
-  showDetail: boolean;
-}
-
-class Component extends React.PureComponent<StateProps> {
+class Component extends React.PureComponent<{}> {
   public render() {
     return (
       <div className={`${ModuleNames.comments}`}>
         <div className="wrap">
           <Switch>
-            <Route exact={true} path="/:articleType/:articleId" component={List} />
-            <Route exact={false} path="/:articleType/:articleId/:itemId" component={Details} />
+            <Route exact={true} path="/:articleType/:articleId/comments" component={List} />
+            <Route exact={true} path="/:articleType/:articleId/comments/:itemId" component={Details} />
           </Switch>
         </div>
         <Editor />
@@ -32,10 +27,4 @@ class Component extends React.PureComponent<StateProps> {
   }
 }
 
-const mapStateToProps: (state: RootState) => StateProps = state => {
-  return {
-    showDetail: !!state.comments!.itemDetail,
-  };
-};
-
-export default connect(mapStateToProps)(Component);
+export default Component;

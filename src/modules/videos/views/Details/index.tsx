@@ -1,27 +1,28 @@
 import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
-import {ItemDetail, ListSearch} from 'entity/video';
 import {RootState, moduleGetter} from 'modules';
+import {Route, Switch} from 'react-router-dom';
+import {ViewNames, historyActions} from 'common/route';
 
+import {ItemDetail} from 'entity/video';
 import {Icon as MIcon} from 'antd-mobile';
 import {ModuleNames} from 'modules/names';
 import React from 'react';
+import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 import {loadView} from '@medux/react';
 
-const Comments = loadView(moduleGetter, 'comments', 'Main');
+const commentsMain = loadView(moduleGetter, 'comments', 'Main');
 
 interface StateProps {
-  listSearch: ListSearch | undefined;
+  routeParams: RouteParams;
   itemDetail: ItemDetail | undefined;
 }
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onClose = () => {
-    // const listSearch = {...this.props.listSearch};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // this.props.dispatch(routerActions.push(toUrl('/videos', search)));
+    historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], params: {videos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {
@@ -36,22 +37,14 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
             </span>
           </div>
           <div className="content">
-            <video
-              width="100%"
-              height="100%"
-              autoPlay={true}
-              controls={true}
-              preload="auto"
-              muted={false}
-              playsInline={true}
-              poster={itemDetail.coverUrl}
-              onError={() => this.setState({message: '暂无视频！'})}
-            >
+            <video width="100%" height="100%" autoPlay={true} controls={true} preload="auto" muted={false} playsInline={true} poster={itemDetail.coverUrl}>
               <source src={itemDetail.videoUrl} type="video/mp4" />
             </video>
           </div>
           <div className="comments-panel">
-            <Comments />
+            <Switch>
+              <Route exact={false} path="/:articleType/:articleId/comments" component={commentsMain} />
+            </Switch>
           </div>
         </div>
       );
@@ -79,7 +72,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.videos!;
   return {
-    listSearch: model.listSearch,
+    routeParams: model.routeParams!,
     itemDetail: model.itemDetail,
   };
 };

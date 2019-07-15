@@ -9,7 +9,7 @@ import {ModuleNames} from 'modules/names';
 import React from 'react';
 import {RootState} from 'modules';
 import {findDOMNode} from 'react-dom';
-import {getRouteActions} from 'common/route';
+import {historyActions} from 'common/route';
 
 interface StateProps {
   itemDetail: ItemDetail | undefined;
@@ -17,7 +17,7 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onBack = () => {
-    getRouteActions().goBack();
+    historyActions.goBack();
   };
 
   public render() {

@@ -72,9 +72,9 @@ const mapStateToProps = (state: RootState) => {
   const model = state.comments!;
   return {
     hasLogin: state.app!.curUser!.hasLogin,
-    articleType: model.listSearch ? model.listSearch.articleType : '',
-    articleId: model.listSearch ? model.listSearch.articleId : '',
-    commentId: model.itemDetail ? model.itemDetail.id : '',
+    articleType: model.routeParams!.articleType,
+    articleId: model.routeParams!.articleId,
+    commentId: model.routeParams!.itemId,
   };
 };
 

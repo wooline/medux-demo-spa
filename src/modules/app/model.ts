@@ -7,10 +7,9 @@ import {ProjectConfig, StartupStep} from 'entity/global';
 import {BaseModelState} from '@medux/react-web-router/types/export';
 import {CurUser} from 'entity/session';
 import {CustomError} from 'common/Errors';
-import {ModuleNames} from 'modules/names';
 import {RootState} from 'modules';
 import {Toast} from 'antd-mobile';
-import {getRouteActions} from 'common/route';
+import {historyActions} from 'common/route';
 
 // 定义本模块的State类型
 export interface State extends BaseModelState {
@@ -79,15 +78,15 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     } else if (error.code === '404') {
       this.dispatch(this.actions.putShowNotFoundPop(true));
     } else if (error.code === '301' || error.code === '302') {
-      getRouteActions().replace(error.detail);
+      historyActions.replace(error.detail);
     } else {
-      Toast.fail(error.message);
+      error.message && Toast.fail(error.message);
       await settingsService.api.reportError(error);
     }
   }
   // 监听自已的INIT Action，做一些异步数据请求，不需要手动触发，所以请使用protected或private
   @effect()
-  protected async [`${ModuleNames.app}/${ActionTypes.M_INIT}`]() {
+  protected async [`this/${ActionTypes.M_INIT}`]() {
     const [projectConfig, curUser] = await Promise.all([settingsService.api.getSettings(), sessionService.api.getCurUser()]);
     this.updateState({
       projectConfig,

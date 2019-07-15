@@ -25,3 +25,5 @@ export const moduleGetter = {
 export const actions = exportActions(moduleGetter);
 
 export type RootState = BaseState<typeof moduleGetter>;
+
+export type RouteDataState = RootState['route']['data'];

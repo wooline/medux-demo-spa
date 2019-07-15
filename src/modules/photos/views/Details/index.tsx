@@ -3,53 +3,65 @@ import './index.less';
 import {Carousel, Icon as MIcon} from 'antd-mobile';
 import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
-import {ItemDetail, ListSearch} from 'entity/photo';
 import {RootState, moduleGetter} from 'modules';
+import {Route, Switch} from 'react-router-dom';
+import {ViewNames, historyActions} from 'common/route';
 
+import {ItemDetail} from 'entity/photo';
 import {ModuleNames} from 'modules/names';
 import React from 'react';
+import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 import {loadView} from '@medux/react';
 
-const Comments = loadView(moduleGetter, 'comments', 'Main');
+const commentsMain = loadView(moduleGetter, 'comments', 'Main');
 
 interface StateProps {
-  listSearch: ListSearch | undefined;
+  routeParams: RouteParams;
+  showComment: boolean;
   itemDetail: ItemDetail | undefined;
 }
 
 interface State {
   moreDetail: boolean;
-  showComment: boolean;
 }
 
 class Component extends React.PureComponent<StateProps & DispatchProp, State> {
   public static getDerivedStateFromProps(nextProps: StateProps & DispatchProp): State | null {
     if (!nextProps.itemDetail) {
-      return {moreDetail: false, showComment: false};
+      return {moreDetail: false};
     }
     return null;
   }
   public state: State = {
     moreDetail: false,
-    showComment: false,
   };
 
   private onMoreRemark = () => {
     this.setState({moreDetail: !this.state.moreDetail});
   };
   private onShowComment = () => {
-    this.setState({showComment: !this.state.showComment});
+    const {itemDetail, showComment} = this.props;
+    const itemId = itemDetail!.id;
+    if (showComment) {
+      historyActions.push({
+        paths: [ViewNames.appMain, ViewNames.photosDetails],
+        params: {photos: {...this.props.routeParams, itemId}},
+      });
+    } else {
+      historyActions.push({
+        paths: [ViewNames.appMain, ViewNames.photosDetails, ViewNames.commentsMain, ViewNames.commentsList],
+        params: {photos: {...this.props.routeParams}, comments: {articleType: 'photos', articleId: itemId}},
+      });
+    }
   };
   private onClose = () => {
-    // const listSearch = {...this.props.listSearch};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // historyActions.push(toUrl('/photos', search));
+    historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {
-    const {itemDetail} = this.props;
-    const {moreDetail, showComment} = this.state;
+    const {itemDetail, showComment} = this.props;
+    const {moreDetail} = this.state;
     if (itemDetail) {
       return (
         <div className={`${ModuleNames.photos}-Details g-details g-doc-width g-modal g-enter-in`}>
@@ -87,7 +99,9 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
           <div className={'comments-panel' + (showComment ? ' on' : '')}>
             <div onClick={this.onShowComment} className="mask" />
             <div className="dialog">
-              <Comments />
+              <Switch>
+                <Route exact={false} path="/:articleType/:articleId/comments" component={commentsMain} />
+              </Switch>
             </div>
           </div>
         </div>
@@ -116,7 +130,8 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.photos!;
   return {
-    listSearch: model.listSearch,
+    routeParams: model.routeParams!,
+    showComment: !!state.route.data.views.comments,
     itemDetail: model.itemDetail,
   };
 };

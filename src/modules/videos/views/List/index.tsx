@@ -2,17 +2,21 @@ import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
-import {ListItem, ListSearch, ListSummary} from 'entity/video';
+import {ListItem, ListSummary} from 'entity/video';
 import {RootState, actions} from 'modules';
+import {ViewNames, historyActions} from 'common/route';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
+import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteParams} from '../../meta';
 import Search from 'components/Search';
 
 interface StateProps {
+  routeData: RouteData;
   showSearch: boolean;
-  listSearch: ListSearch | undefined;
+  listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;
   listSummary: ListSummary | undefined;
 }
@@ -21,16 +25,10 @@ let scrollTop = 0;
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    console.log(page);
-    // const listSearch = {...this.props.listSearch, page};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // this.props.dispatch(routerActions.push(toUrl('/videos', search)));
+    historyActions.push({extend: this.props.routeData, params: {videos: {listSearch: {page}}}});
   };
   private onSearch = (title: string) => {
-    console.log(title);
-    // const listSearch = {...this.props.listSearch, title, page: 1};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // this.props.dispatch(routerActions.push(toUrl('/videos', search)));
+    historyActions.push({extend: this.props.routeData, params: {videos: {listSearch: {title, page: 1}}}});
   };
   private onSearchClose = () => {
     this.props.dispatch(actions.app.putShowSearch(false));
@@ -38,12 +36,12 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
       this.onSearch('');
     }
   };
-  private onItemClick = (id: string) => {
-    console.log(id);
+  private onItemClick = (itemId: string) => {
     // 记住当前滚动位置
-    // scrollTop = window.pageYOffset;
-    // const url = `/videos/${id}`;
-    // this.props.dispatch(routerActions.push(url));
+    scrollTop = window.pageYOffset;
+    const {routeData} = this.props;
+    const paths = routeData.paths.slice(0, -1).concat(ViewNames.videosDetails, ViewNames.commentsMain, ViewNames.commentsList);
+    historyActions.push({extend: routeData, paths, params: {videos: {itemId}, comments: {articleType: 'videos', articleId: itemId}}});
   };
 
   public render() {
@@ -94,8 +92,9 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.videos!;
   return {
-    showSearch: Boolean(state.app!.showSearch),
-    listSearch: model.listSearch,
+    showSearch: !!state.app!.showSearch,
+    routeData: state.route.data,
+    listSearch: model.routeParams!.listSearch,
     listItems: model.listItems,
     listSummary: model.listSummary,
   };

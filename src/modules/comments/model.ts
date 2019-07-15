@@ -1,60 +1,43 @@
 import {ActionTypes, BaseModelHandlers, effect} from '@medux/react-web-router';
 import {ItemCreateData, ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/comment';
+import {extract, pickEqual} from 'common/utils';
 
 import {BaseModelState} from '@medux/react-web-router/types/export';
-import {ModuleNames} from 'modules/names';
 import {RootState} from 'modules';
+import {RouteParams} from './meta';
 import {Toast} from 'antd-mobile';
 import api from './api';
-import {simpleEqual} from 'common/utils';
-
-// 定义本模块的路由参数类型
-export interface RouteParams {
-  itemId: string;
-  detailKey: string;
-  listKey: string;
-  listSearch: ListSearch;
-}
 
 // 定义本模块的State类型
 export interface State extends BaseModelState<RouteParams> {
-  listSearch?: ListSearch;
   listItems?: ListItem[];
   listSummary?: ListSummary;
   itemDetail?: ItemDetail;
-  listKey?: string;
-  detailKey?: string;
 }
 
 // 定义本模块State的初始值
-export const initModelState: State = {
-  routeParams: {
-    detailKey: '',
-    listKey: '',
-    itemId: '',
-    listSearch: {
-      articleType: 'photo',
-      articleId: '',
-      isNewest: false,
-      page: 1,
-      pageSize: 10,
-    },
-  },
-};
+export const initModelState: State = {};
 
 export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   @effect()
   public async searchList(options: Partial<ListSearch> = {}) {
-    const listSearch: ListSearch = {...this.state.listSearch!, ...options};
-    const {listItems, listSummary} = await api.searchList(listSearch);
-    const listKey = this.state.routeParams!.listKey;
-    this.updateState({listSearch, listItems, listSummary, listKey});
+    const curRouteParams = this.state.routeParams!;
+    // 组合成新的搜索条件
+    const newListSearch: ListSearch = {...curRouteParams.listSearch, articleId: curRouteParams.articleId, articleType: curRouteParams.articleType, ...options};
+    const {listItems, listSummary} = await api.searchList(newListSearch);
+    const {articleId, articleType, $: listSearch} = extract(newListSearch, 'articleId', 'articleType');
+    const _listKey = this.rootState.route.data.params.comments!._listKey;
+    // 更新结果以及搜索条件
+    const routeParams = {...curRouteParams!, articleId, articleType, _listKey, listSearch};
+    this.updateState({routeParams, listItems, listSummary});
   }
   @effect()
   public async getItemDetail(itemId: string) {
+    const curRouteParams = this.state.routeParams!;
     const itemDetail = await api.getItemDetail(itemId);
-    const detailKey = this.state.routeParams!.detailKey;
-    this.updateState({itemDetail, detailKey});
+    const _detailKey = this.rootState.route.data.params.comments!._detailKey;
+    const routeParams = {...curRouteParams, itemId, _detailKey};
+    this.updateState({routeParams, itemDetail});
   }
 
   @effect()
@@ -78,17 +61,22 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   // 同时监听初始化INIT和路由变化的action
   // 参数 null 表示不需要监控loading状态，searchList时会监控loading
   @effect(null)
-  protected async [`${ModuleNames.comments}/${ActionTypes.M_INIT},${ActionTypes.F_ROUTE_COMPLETE}`]() {
-    const routeData = this.rootState.route.data;
-    const routeParams = this.state.routeParams!;
-    const views = routeData.views;
-    if (views.comments && views.comments.List) {
-      if (this.state.listKey !== routeParams.listKey || !simpleEqual(this.state.listSearch, routeParams.listSearch)) {
-        await this.dispatch(this.actions.searchList(routeParams.listSearch));
-      }
-    } else if (views.comments && views.comments.Details) {
-      if (this.state.detailKey !== routeParams.detailKey || this.state.itemDetail!.id !== routeParams.itemId) {
-        await this.dispatch(this.actions.getItemDetail(routeParams.itemId));
+  protected async [`this/${ActionTypes.M_INIT},${ActionTypes.F_ROUTE_CHANGE}`]() {
+    if (this.rootState.route.data.views.comments) {
+      const {
+        views,
+        params: {comments},
+      } = this.rootState.route.data;
+      const thisParams = this.state.routeParams!;
+      const routeParams = comments!;
+      if (views.comments!.List) {
+        if (!this.state.listItems || !pickEqual(thisParams, routeParams, ['_listKey', 'articleId', 'articleType', 'listSearch'])) {
+          await this.dispatch(this.actions.searchList({...routeParams.listSearch, articleId: routeParams.articleId, articleType: routeParams.articleType}));
+        }
+      } else if (views.comments!.Details) {
+        if (!this.state.itemDetail || thisParams._detailKey !== routeParams._detailKey || this.state.itemDetail.id !== routeParams.itemId) {
+          await this.dispatch(this.actions.getItemDetail(routeParams.itemId));
+        }
       }
     }
   }

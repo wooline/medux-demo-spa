@@ -1,34 +1,32 @@
 import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
-import {ListItem, ListSearch, ListSummary} from 'entity/message';
+import {ListItem, ListSummary} from 'entity/message';
 import {RootState, actions} from 'modules';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
+import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteParams} from '../../meta';
 import Search from 'components/Search';
+import {historyActions} from 'common/route';
 
 interface StateProps {
+  routeData: RouteData;
   showSearch: boolean;
-  listSearch: ListSearch | undefined;
+  listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;
   listSummary: ListSummary | undefined;
 }
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    console.log(page);
-    // const listSearch = {...this.props.listSearch, page};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // historyActions.push(toUrl('/messages', search));
+    historyActions.push({extend: this.props.routeData, params: {messages: {listSearch: {page}}}});
   };
 
   private onSearch = (title: string) => {
-    console.log(title);
-    // const listSearch = {...this.props.listSearch, title, page: 1};
-    // const search = stringifyQuery('search', listSearch, defaultListSearch);
-    // historyActions.push(toUrl('/messages', search));
+    historyActions.push({extend: this.props.routeData, params: {messages: {listSearch: {title, page: 1}}}});
   };
 
   private onSearchClose = () => {
@@ -70,8 +68,9 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.messages!;
   return {
-    showSearch: Boolean(state.app!.showSearch),
-    listSearch: model.listSearch,
+    showSearch: !!state.app!.showSearch,
+    routeData: state.route.data,
+    listSearch: model.routeParams!.listSearch,
     listItems: model.listItems,
     listSummary: model.listSummary,
   };

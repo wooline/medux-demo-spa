@@ -2,18 +2,21 @@ import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
-import {ListItem, ListSearch, ListSummary} from 'entity/photo';
+import {ListItem, ListSummary} from 'entity/photo';
 import {RootState, actions} from 'modules';
-import {ViewNames, getRouteActions} from 'common/route';
+import {ViewNames, historyActions} from 'common/route';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
+import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteParams} from '../../meta';
 import Search from 'components/Search';
 
 interface StateProps {
+  routeData: RouteData;
   showSearch: boolean;
-  listSearch: ListSearch | undefined;
+  listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;
   listSummary: ListSummary | undefined;
 }
@@ -22,23 +25,23 @@ let scrollTop = 0;
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    const listSearch = {...this.props.listSearch, page};
-    getRouteActions().push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {listSearch}}});
+    historyActions.push({extend: this.props.routeData, params: {photos: {listSearch: {page}}}});
   };
   private onSearch = (title: string) => {
-    const listSearch = {...this.props.listSearch, title, page: 1};
-    getRouteActions().push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {listSearch}}});
+    historyActions.push({extend: this.props.routeData, params: {photos: {listSearch: {title, page: 1}}}});
   };
   private onSearchClose = () => {
     this.props.dispatch(actions.app.putShowSearch(false));
-    if (this.props.listSearch!.title) {
+    if (this.props.listSearch.title) {
       this.onSearch('');
     }
   };
   private onItemClick = (itemId: string) => {
     // 记住当前滚动位置
     scrollTop = window.pageYOffset;
-    getRouteActions().push({paths: [ViewNames.appMain, ViewNames.photosDetails], params: {photos: {itemId}}});
+    const {routeData} = this.props;
+    const paths = routeData.paths.slice(0, -1).concat(ViewNames.photosDetails);
+    historyActions.push({extend: routeData, paths, params: {photos: {itemId}}});
   };
 
   public render() {
@@ -97,8 +100,9 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.photos!;
   return {
-    showSearch: Boolean(state.app!.showSearch),
-    listSearch: model.listSearch,
+    showSearch: !!state.app!.showSearch,
+    routeData: state.route.data,
+    listSearch: model.routeParams!.listSearch,
     listItems: model.listItems,
     listSummary: model.listSummary,
   };

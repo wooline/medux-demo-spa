@@ -2,37 +2,43 @@
 import './index.less';
 
 import {DispatchProp, connect} from 'react-redux';
-import {ListItem, ListSearch, ListSummary} from 'entity/comment';
-import {RootState, actions} from 'modules';
+import {ListItem, ListSummary} from 'entity/comment';
+import {ViewNames, historyActions} from 'common/route';
 
 import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
+import {RootState} from 'modules';
+import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 
 interface StateProps {
-  listSearch: ListSearch | undefined;
+  routeData: RouteData;
+  listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;
   listSummary: ListSummary | undefined;
 }
 let scrollTop = NaN;
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    this.props.dispatch(actions.comments.searchList({page}));
+    historyActions.push({extend: this.props.routeData, params: {comments: {listSearch: {page}}}});
   };
   private onSortChange = (isNewest: boolean) => {
-    this.props.dispatch(actions.comments.searchList({isNewest, page: 1}));
+    historyActions.push({extend: this.props.routeData, params: {comments: {listSearch: {page: 1, isNewest}}}});
   };
-  private onItemClick = (id: string) => {
+  private onItemClick = (itemId: string) => {
     // 记住当前滚动位置
     const dom = findDOMNode(this) as HTMLElement;
     scrollTop = (dom.parentNode as HTMLDivElement).scrollTop;
-    this.props.dispatch(actions.comments.getItemDetail(id));
+    const {routeData} = this.props;
+    const paths = routeData.paths.slice(0, -1).concat(ViewNames.commentsDetails);
+    historyActions.push({extend: routeData, paths, params: {comments: {itemId}}});
   };
 
   public render() {
     const {listSearch, listItems, listSummary} = this.props;
-    if (listItems && listSearch) {
+    if (listItems) {
       return (
         <div className={`${ModuleNames.comments}-List`}>
           <div className="list-header">
@@ -88,7 +94,8 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 const mapStateToProps: (state: RootState) => StateProps = state => {
   const model = state.comments!;
   return {
-    listSearch: model.listSearch,
+    routeData: state.route.data,
+    listSearch: model.routeParams!.listSearch,
     listItems: model.listItems,
     listSummary: model.listSummary,
   };
