@@ -9,8 +9,8 @@ const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const PostcssPresetEnv = require('postcss-preset-env');
 const pathsConfig = require('./path.conifg');
 
-const conPath = path.join(pathsConfig.configPath, process.env.WEBSITE || './prod');
-const conEnv = require(path.join(conPath, './env'));
+const projectConfigPath = path.join(pathsConfig.configPath, process.env.WEBSITE || './prod');
+const conEnv = require(path.join(projectConfigPath, './env'));
 // const EnvDefine = {BBBB: JSON.stringify(appPackage.devServer.url), IS_DEV: JSON.stringify(true)};
 const htmlReplace = [
   {
@@ -84,7 +84,8 @@ const config = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: [pathsConfig.srcPath, 'node_modules'],
     alias: {
-      conf: conPath,
+      ...pathsConfig.moduleAlias,
+      conf: projectConfigPath,
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -107,9 +108,9 @@ const config = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        include: pathsConfig.srcPath,
+        include: pathsConfig.moduleSearch,
         // exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader?cacheDirectory=true',
       },
       {
         test: /\.css$/,

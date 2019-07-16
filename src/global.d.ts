@@ -1,6 +1,4 @@
 declare module 'rc-form';
-declare module 'deep-extend';
-
 // 定义全局设置数据结构
 declare const InitEnv: {
   clientPublicPath: string;

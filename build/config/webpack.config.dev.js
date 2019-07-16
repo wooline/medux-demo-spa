@@ -8,8 +8,8 @@ const PostcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const PostcssPresetEnv = require('postcss-preset-env');
 const pathsConfig = require('./path.conifg');
 
-const conPath = path.join(pathsConfig.configPath, process.env.WEBSITE || './dev');
-const conEnv = require(path.join(conPath, './env'));
+const projectConfigPath = path.join(pathsConfig.configPath, process.env.WEBSITE || './dev');
+const conEnv = require(path.join(projectConfigPath, './env'));
 
 const htmlReplace = [
   {
@@ -69,13 +69,14 @@ const config = {
     chunkFilename: 'js/[name].chunk.js',
     publicPath: '/',
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+    devtoolModuleFilenameTemplate: info => path.relative(pathsConfig.srcPath, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: [pathsConfig.srcPath, 'node_modules'],
     alias: {
-      conf: conPath,
+      ...pathsConfig.moduleAlias,
+      conf: projectConfigPath,
     },
   },
   devtool: 'cheap-module-source-map',
@@ -87,9 +88,9 @@ const config = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        include: pathsConfig.srcPath,
+        include: pathsConfig.moduleSearch,
         // exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader?cacheDirectory=true',
       },
       {
         test: /\.css$/,

@@ -149,7 +149,7 @@ h6 {
 .g-border-top {
   border-top: 1Px solid #ddd;
 }
-@media not all, (min-resolution: 2dppx) {
+@media not all, (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   html:not([data-scale]) .g-border-top {
     border-top: none;
   }
