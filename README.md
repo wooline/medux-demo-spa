@@ -41,3 +41,17 @@ npm start
 
 - 或者手机扫码查看：
   ![在线 Demo](https://github.com/wooline/react-coat-spa-demo/blob/master/docs/imgs/qr.png)
+
+## 主要特点
+
+可进行细粒度的路由控制，例如：
+
+- [旅行路线列表](http://react-coat.spa.teying.vip/photos)
+- [旅行路线列表+搜索](http://react-coat.spa.teying.vip/photos?photos-search=%7B%22title%22%3A%22%u6D77%u5929%22%7D)
+- [旅行路线详情](http://react-coat.spa.teying.vip/photos/1/comments?comments-search=%7B%22articleId%22%3A%221%22%7D)
+- [旅行路线详情+评论列表(最新、第 2 页)](http://react-coat.spa.teying.vip/photos/1/comments?comments-search=%7B%22articleId%22%3A%221%22%2C%22isNewest%22%3Atrue%2C%22page%22%3A2%7D&photos-showComment=true)
+- [旅行路线详情+评论详情](http://react-coat.spa.teying.vip/photos/1/comments/16?photos-showComment=true)
+
+## 服务器同构渲染(SSR)
+
+查看：[medux-demo-ssr](https://github.com/wooline/medux-demo-ssr)
