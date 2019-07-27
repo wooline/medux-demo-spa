@@ -32,9 +32,8 @@ npm start
 ## 运行
 
 - `npm start` 以开发模式运行
-- `npm run build` 以产品模式编译生成文件
-- `npm run prod-express-demo` 以产品模式编译生成文件并启用一个 express 做 demo
-- `npm run gen-icon` 自动生成 [iconfont](https://iconfont.cn) 文件及 ts 类型
+- `npm run build` 编译生成文件
+- `npm run build-demo` 编译生成文件并启用一个 express 做 demo
 
 ## 查看在线 Demo
 

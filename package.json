@@ -8,7 +8,9 @@
     "types-check": "tsc",
     "lint": "npm run eslint && npm run stylelint && npm run types-check",
     "start": "npm run lint && node build/start.js",
-    "build": "npm run lint && node build/build.js"
+    "build": "npm run lint && node build/build.js",
+    "site": "npm run lint && cross-env NODE_ENV=production WEBSITE=site node build/build.js",
+    "build-demo": "npm run build && node build/demo.js"
   },
   "repository": "https://github.com/wooline/medux-demo-spa",
   "homepage": "https://github.com/wooline/medux-demo-spa",
