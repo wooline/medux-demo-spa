@@ -19,3 +19,26 @@
 基于`@medux/web`，是一套具体的路由序列化与反序列化方案
 
 参阅：[@medux/web-route-plan-a](https://github.com/wooline/medux/tree/master/packages/web-route-plan-a)
+
+## 安装
+
+```
+git clone https://github.com/wooline/medux-demo-spa.git
+cd medux-demo-spa
+npm install
+npm start
+```
+
+## 运行
+
+- `npm start` 以开发模式运行
+- `npm run build` 以产品模式编译生成文件
+- `npm run prod-express-demo` 以产品模式编译生成文件并启用一个 express 做 demo
+- `npm run gen-icon` 自动生成 [iconfont](https://iconfont.cn) 文件及 ts 类型
+
+## 查看在线 Demo
+
+- [点击查看在线 Demo](http://react-coat.spa.teying.vip/)
+
+- 或者手机扫码查看：
+  ![在线 Demo](https://github.com/wooline/react-coat-spa-demo/blob/master/docs/imgs/qr.png)

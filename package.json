@@ -1,7 +1,7 @@
 {
   "name": "medux-demo-spa",
   "version": "1.0.0",
-  "description": "",
+  "description": "demo for @medux",
   "scripts": {
     "stylelint": "stylelint \"./src/**/*.less\" --syntax less",
     "eslint": "eslint \"./src/**/*.ts\"",
