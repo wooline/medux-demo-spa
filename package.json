@@ -36,8 +36,8 @@
     }
   },
   "dependencies": {
-    "@medux/react-web-router": "0.1.0-alpha.1",
-    "@medux/web-route-plan-a": "0.1.0-alpha.1",
+    "@medux/react-web-router": "0.1.0-alpha.2",
+    "@medux/web-route-plan-a": "0.1.0-alpha.2",
     "antd-mobile": "^2.2.13",
     "rc-form": "^2.4.5",
     "react": "^16.8.6",

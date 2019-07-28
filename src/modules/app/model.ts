@@ -69,7 +69,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     }
   }
 
-  // uncatched错误会触发@@framework/ERROR，监听并发送给后台
+  // effect执行错误会触发@@framework/ERROR，监听并发送给后台
   // 监听外部模块的Action，不需要手动触发，所以请使用protected或private
   @effect(null) // 不需要loading，设置为null
   protected async [ActionTypes.F_ERROR](error: CustomError) {
