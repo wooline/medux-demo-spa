@@ -74,7 +74,7 @@ export function toUrl(routeOptions: RoutePayload<RootState['route']['data']['par
 export function toUrl(pathname: string, search: string, hash: string): string;
 export function toUrl(...args: any[]): string {
   if (args.length === 1) {
-    const location = transformRoute.routeToLocation(fillRouteData(args[0] as RoutePayload<{}>));
+    const location = transformRoute.routeToLocation(fillRouteData(args[0] as RoutePayload<any>));
     args = [location.pathname, location.search, location.hash];
   }
   const [pathname, search, hash] = args as [string, string, string];
