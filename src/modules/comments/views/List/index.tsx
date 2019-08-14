@@ -22,10 +22,10 @@ interface StateProps {
 let scrollTop = NaN;
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    historyActions.push({extend: this.props.routeData, params: {comments: {listSearch: {page}}}});
+    historyActions.push({extend: this.props.routeData, stackParams: [{comments: {listSearch: {page}}}]});
   };
   private onSortChange = (isNewest: boolean) => {
-    historyActions.push({extend: this.props.routeData, params: {comments: {listSearch: {page: 1, isNewest}}}});
+    historyActions.push({extend: this.props.routeData, stackParams: [{comments: {listSearch: {page: 1, isNewest}}}]});
   };
   private onItemClick = (itemId: string) => {
     // 记住当前滚动位置
@@ -33,7 +33,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     scrollTop = (dom.parentNode as HTMLDivElement).scrollTop;
     const {routeData} = this.props;
     const paths = routeData.paths.slice(0, -1).concat(ViewNames.commentsDetails);
-    historyActions.push({extend: routeData, paths, params: {comments: {itemId}}});
+    historyActions.push({extend: routeData, paths, stackParams: [{comments: {itemId}}]});
   };
 
   public render() {

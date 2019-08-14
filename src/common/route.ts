@@ -1,22 +1,26 @@
-import {RouteConfig, RoutePayload, buildTransformRoute, fillRouteData, getRouteActions} from '@medux/web-route-plan-a';
+import {RouteConfig, RoutePayload, buildTransformRoute, fillRouteData, getRouteActions, setConfig} from '@medux/route-plan-a';
 
 import {ModuleNames} from 'modules/names';
 import {RootState} from 'modules';
 import {defaultRouteParams as comments} from 'modules/comments/meta';
+import {createBrowserHistory} from 'history';
 import {getHistoryActions} from '@medux/react-web-router';
 import {defaultRouteParams as messages} from 'modules/messages/meta';
 import {defaultRouteParams as photos} from 'modules/photos/meta';
 import {defaultRouteParams as videos} from 'modules/videos/meta';
 
+export const history = createBrowserHistory();
 export const historyActions = getRouteActions<RootState['route']['data']['params']>(getHistoryActions);
 
-export const defaultRouteParams: {[K in ModuleNames]: any} = {
+const defaultRouteParams: {[K in ModuleNames]: any} = {
   app: null,
   photos,
   videos,
   messages,
   comments,
 };
+setConfig({defaultRouteParams});
+
 export enum ViewNames {
   'appMain' = 'app.Main',
   'photosList' = 'photos.List',
@@ -70,16 +74,16 @@ export function toUrl(routeOptions: RoutePayload<RootState['route']['data']['par
 export function toUrl(pathname: string, search: string, hash: string): string;
 export function toUrl(...args: any[]): string {
   if (args.length === 1) {
-    const location = transformRoute.routeToLocation(fillRouteData(args[0] as RoutePayload));
+    const location = transformRoute.routeToLocation(fillRouteData(args[0] as RoutePayload<{}>));
     args = [location.pathname, location.search, location.hash];
   }
   const [pathname, search, hash] = args as [string, string, string];
   let url = pathname;
   if (search) {
-    url += '?' + search.replace('?', '');
+    url += search;
   }
   if (hash) {
-    url += '#' + hash.replace('#', '');
+    url += hash;
   }
   return url;
 }

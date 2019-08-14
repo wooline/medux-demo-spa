@@ -30,7 +30,7 @@ class Component extends React.PureComponent<Props> {
             key="photos"
             selected={!!views.photos}
             onPress={() => {
-              historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {_listKey: uniqueKey()}}});
+              historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], stackParams: [{photos: {_listKey: uniqueKey()}}]});
             }}
           />
           <TabBar.Item
@@ -40,7 +40,7 @@ class Component extends React.PureComponent<Props> {
             selectedIcon={<Icon type={IconClass.LIVE} />}
             selected={!!views.videos}
             onPress={() => {
-              historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], params: {videos: {_listKey: uniqueKey()}}});
+              historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], stackParams: [{videos: {_listKey: uniqueKey()}}]});
             }}
           />
           <TabBar.Item
@@ -53,7 +53,7 @@ class Component extends React.PureComponent<Props> {
               if (!this.props.hasLogin) {
                 dispatch(errorAction(new UnauthorizedError()));
               } else {
-                historyActions.push({paths: [ViewNames.appMain, ViewNames.messagesList], params: {messages: {_listKey: uniqueKey()}}});
+                historyActions.push({paths: [ViewNames.appMain, ViewNames.messagesList], stackParams: [{messages: {_listKey: uniqueKey()}}]});
               }
             }}
           />
