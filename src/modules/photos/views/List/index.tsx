@@ -25,10 +25,10 @@ let scrollTop = 0;
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    historyActions.push({extend: this.props.routeData, stackParams: [{photos: {listSearch: {page}}}]});
+    historyActions.push({extend: this.props.routeData, params: {photos: {listSearch: {page}}}});
   };
   private onSearch = (title: string) => {
-    historyActions.push({extend: this.props.routeData, stackParams: [{photos: {listSearch: {title, page: 1}}}]});
+    historyActions.push({extend: this.props.routeData, params: {photos: {listSearch: {title, page: 1}}}});
   };
   private onSearchClose = () => {
     this.props.dispatch(actions.app.putShowSearch(false));
@@ -41,7 +41,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     scrollTop = window.pageYOffset;
     const {routeData} = this.props;
     const paths = routeData.paths.slice(0, -1).concat(ViewNames.photosDetails);
-    historyActions.push({extend: routeData, paths, stackParams: [{photos: {itemId}}]});
+    historyActions.push({extend: routeData, paths, params: {photos: {itemId}}});
   };
 
   public render() {

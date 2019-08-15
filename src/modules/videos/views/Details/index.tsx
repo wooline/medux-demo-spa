@@ -22,7 +22,7 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onClose = () => {
-    historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], stackParams: [{videos: {...this.props.routeParams, itemId: ''}}]});
+    historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], params: {videos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {

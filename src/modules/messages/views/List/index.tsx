@@ -22,11 +22,11 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onPageChange = (page: number) => {
-    historyActions.push({extend: this.props.routeData, stackParams: [{messages: {listSearch: {page}}}]});
+    historyActions.push({extend: this.props.routeData, params: {messages: {listSearch: {page}}}});
   };
 
   private onSearch = (title: string) => {
-    historyActions.push({extend: this.props.routeData, stackParams: [{messages: {listSearch: {title, page: 1}}}]});
+    historyActions.push({extend: this.props.routeData, params: {messages: {listSearch: {title, page: 1}}}});
   };
 
   private onSearchClose = () => {

@@ -1,16 +1,16 @@
-import {RouteConfig, RoutePayload, buildTransformRoute, fillRouteData, getRouteActions, setConfig} from '@medux/route-plan-a';
+import {RouteConfig, ToUrl} from '@medux/react-web-router/types/export';
+import {toUrl as baseToUrl, getHistoryActions, setRouteConfig} from '@medux/react-web-router';
 
 import {ModuleNames} from 'modules/names';
 import {RootState} from 'modules';
 import {defaultRouteParams as comments} from 'modules/comments/meta';
 import {createBrowserHistory} from 'history';
-import {getHistoryActions} from '@medux/react-web-router';
 import {defaultRouteParams as messages} from 'modules/messages/meta';
 import {defaultRouteParams as photos} from 'modules/photos/meta';
 import {defaultRouteParams as videos} from 'modules/videos/meta';
 
 export const history = createBrowserHistory();
-export const historyActions = getRouteActions<RootState['route']['data']['params']>(getHistoryActions);
+export const historyActions = getHistoryActions<RootState['route']['data']['params']>();
 
 const defaultRouteParams: {[K in ModuleNames]: any} = {
   app: null,
@@ -19,7 +19,7 @@ const defaultRouteParams: {[K in ModuleNames]: any} = {
   messages,
   comments,
 };
-setConfig({defaultRouteParams});
+setRouteConfig({defaultRouteParams});
 
 export enum ViewNames {
   'appMain' = 'app.Main',
@@ -68,22 +68,4 @@ export const routeConfig: RouteConfig = {
   ],
 };
 
-export const transformRoute = buildTransformRoute(routeConfig);
-
-export function toUrl(routeOptions: RoutePayload<RootState['route']['data']['params']>): string;
-export function toUrl(pathname: string, search: string, hash: string): string;
-export function toUrl(...args: any[]): string {
-  if (args.length === 1) {
-    const location = transformRoute.routeToLocation(fillRouteData(args[0] as RoutePayload<any>));
-    args = [location.pathname, location.search, location.hash];
-  }
-  const [pathname, search, hash] = args as [string, string, string];
-  let url = pathname;
-  if (search) {
-    url += search;
-  }
-  if (hash) {
-    url += hash;
-  }
-  return url;
-}
+export const toUrl: ToUrl<RootState['route']['data']['params']> = baseToUrl;

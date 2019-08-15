@@ -46,17 +46,17 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
     if (showComment) {
       historyActions.push({
         paths: [ViewNames.appMain, ViewNames.photosDetails],
-        stackParams: [{photos: {...this.props.routeParams, itemId}}],
+        params: {photos: {...this.props.routeParams, itemId}},
       });
     } else {
       historyActions.push({
         paths: [ViewNames.appMain, ViewNames.photosDetails, ViewNames.commentsMain, ViewNames.commentsList],
-        stackParams: [{photos: {...this.props.routeParams}, comments: {articleType: 'photos', articleId: itemId}}],
+        params: {photos: {...this.props.routeParams}, comments: {articleType: 'photos', articleId: itemId}},
       });
     }
   };
   private onClose = () => {
-    historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], stackParams: [{photos: {...this.props.routeParams, itemId: ''}}]});
+    historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {
