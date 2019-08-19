@@ -5,7 +5,6 @@ import {ListItem, ListSummary} from 'entity/comment';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';
-import {RootState} from 'modules';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 

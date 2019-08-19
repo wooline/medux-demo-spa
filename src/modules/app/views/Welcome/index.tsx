@@ -1,6 +1,5 @@
 import './index.less';
 
-import {RootState, actions} from 'modules';
 import {StartupPageConfig, StartupStep} from 'entity/global';
 
 import React from 'react';

@@ -4,7 +4,6 @@ import './index.less';
 import {ItemDetail} from 'entity/comment';
 import {Icon as MIcon} from 'antd-mobile';
 import React from 'react';
-import {RootState} from 'modules';
 import {findDOMNode} from 'react-dom';
 
 interface StateProps {

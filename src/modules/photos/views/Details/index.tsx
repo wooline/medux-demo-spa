@@ -2,7 +2,6 @@ import './index.less';
 
 import {Carousel, Icon as MIcon} from 'antd-mobile';
 import Icon, {IconClass} from 'components/Icon';
-import {RootState, moduleGetter} from 'modules';
 import {Route, Switch} from 'react-router-dom';
 
 import {ItemDetail} from 'entity/photo';

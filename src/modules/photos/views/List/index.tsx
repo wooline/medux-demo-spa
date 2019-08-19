@@ -2,7 +2,6 @@ import './index.less';
 
 import Icon, {IconClass} from 'components/Icon';
 import {ListItem, ListSummary} from 'entity/photo';
-import {RootState, actions} from 'modules';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';

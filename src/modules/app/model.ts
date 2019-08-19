@@ -6,7 +6,6 @@ import {ProjectConfig, StartupStep} from 'entity/global';
 
 import {CurUser} from 'entity/session';
 import {CustomError} from 'entity/common';
-import {RootState} from 'modules';
 import {Toast} from 'antd-mobile';
 
 // 定义本模块的State类型

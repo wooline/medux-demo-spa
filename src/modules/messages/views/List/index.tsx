@@ -1,7 +1,6 @@
 import './index.less';
 
 import {ListItem, ListSummary} from 'entity/message';
-import {RootState, actions} from 'modules';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';

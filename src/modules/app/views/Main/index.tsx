@@ -2,7 +2,6 @@ import 'asset/css/global.less';
 import './index.less';
 
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {RootState, actions, moduleGetter} from 'modules';
 
 import BottomNav from '../BottomNav';
 import Loading from '../Loading';

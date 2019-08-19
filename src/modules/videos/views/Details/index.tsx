@@ -1,6 +1,5 @@
 import './index.less';
 
-import {RootState, moduleGetter} from 'modules';
 import {Route, Switch} from 'react-router-dom';
 
 import {ItemDetail} from 'entity/video';

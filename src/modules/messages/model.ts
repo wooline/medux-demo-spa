@@ -1,7 +1,6 @@
 import {ActionTypes, BaseModelHandlers, BaseModelState, effect} from '@medux/react-web-router';
 import {ListItem, ListSearch, ListSummary} from 'entity/message';
 
-import {RootState} from 'modules';
 import {RouteParams} from './meta';
 import api from './api';
 import {simpleEqual} from 'common/utils';

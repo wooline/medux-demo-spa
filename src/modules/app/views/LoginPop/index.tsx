@@ -5,7 +5,6 @@ import {RCForm, createForm} from 'rc-form';
 
 import {LoginRequest} from 'entity/session';
 import React from 'react';
-import {actions} from 'modules';
 
 interface Props extends RCForm, DispatchProp {}
 

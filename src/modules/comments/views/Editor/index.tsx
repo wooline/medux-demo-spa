@@ -2,7 +2,6 @@ import './index.less';
 
 import {Button, InputItem, Toast} from 'antd-mobile';
 import {RCForm, createForm} from 'rc-form';
-import {RootState, actions} from 'modules';
 
 import React from 'react';
 import {UnauthorizedError} from 'entity/common';

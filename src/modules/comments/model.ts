@@ -2,7 +2,6 @@ import {ActionTypes, BaseModelHandlers, BaseModelState, effect} from '@medux/rea
 import {ItemCreateData, ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/comment';
 import {extract, pickEqual} from 'common/utils';
 
-import {RootState} from 'modules';
 import {RouteParams} from './meta';
 import {Toast} from 'antd-mobile';
 import api from './api';

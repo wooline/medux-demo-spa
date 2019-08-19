@@ -1,7 +1,6 @@
 import './index.less';
 
 import {Icon, NavBar} from 'antd-mobile';
-import {RootState, actions} from 'modules';
 
 import React from 'react';
 

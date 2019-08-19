@@ -4,7 +4,6 @@ import {Route, Switch} from 'react-router-dom';
 
 import Editor from '../Editor';
 import React from 'react';
-import {moduleGetter} from 'modules';
 
 const Details = loadView(moduleGetter, 'comments', 'Details');
 const List = loadView(moduleGetter, 'comments', 'List');
