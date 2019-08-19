@@ -5,7 +5,7 @@ import Icon, {IconClass} from 'components/Icon';
 import React from 'react';
 import {RootState} from 'modules';
 import {TabBar} from 'antd-mobile';
-import {UnauthorizedError} from 'common/Errors';
+import {UnauthorizedError} from 'entity/common';
 import {errorAction} from '@medux/react-web-router';
 import {uniqueKey} from 'common/utils';
 

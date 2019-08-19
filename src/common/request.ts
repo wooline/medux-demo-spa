@@ -1,6 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig, Method} from 'axios';
 
-import {CustomError} from 'common/Errors';
+import {CustomError} from 'entity/common';
 
 function handleError(error: AxiosError) {
   const httpErrorCode = error.response ? error.response.status : 0;

@@ -5,7 +5,7 @@ import {ActionTypes, BaseModelHandlers, BaseModelState, LoadingState, effect, re
 import {ProjectConfig, StartupStep} from 'entity/global';
 
 import {CurUser} from 'entity/session';
-import {CustomError} from 'common/Errors';
+import {CustomError} from 'entity/common';
 import {RootState} from 'modules';
 import {Toast} from 'antd-mobile';
 

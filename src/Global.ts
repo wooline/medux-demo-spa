@@ -1,7 +1,7 @@
-// 将某些常用变量提升至global，对全局变量有洁癖者可忽略此文件
-import {CustomError, ErrorEntity} from 'entity/common';
 import {actions, historyActions, moduleGetter, moduleNames, toUrl, viewNames} from './modules';
 
+// 将某些常用变量提升至global，对全局变量有洁癖者可忽略此文件
+import {ErrorEntity} from 'entity/common';
 import {connect} from 'react-redux';
 import {loadView} from '@medux/react-web-router';
 
@@ -33,7 +33,6 @@ declare global {
   const actions: Actions;
   const moduleNames: moduleNames;
   const viewNames: viewNames;
-  const CustomError: CustomError;
   const reduxConnect: typeof connect;
   const historyActions: HistoryActions;
   const toUrl: ToUrl;
@@ -45,4 +44,4 @@ const initEnv = getInitEnv();
   Object.keys(data).forEach(key => {
     window[key] = data[key];
   });
-})({actions, moduleGetter, moduleNames, viewNames, toUrl, initEnv, CustomError, historyActions, loadView, reduxConnect: connect});
+})({actions, moduleGetter, moduleNames, viewNames, toUrl, initEnv, historyActions, loadView, reduxConnect: connect});

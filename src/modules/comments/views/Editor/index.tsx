@@ -1,12 +1,11 @@
 import './index.less';
 
 import {Button, InputItem, Toast} from 'antd-mobile';
+import {RCForm, createForm} from 'rc-form';
 import {RootState, actions} from 'modules';
 
-import {RCForm} from 'entity/common';
 import React from 'react';
-import {UnauthorizedError} from 'common/Errors';
-import {createForm} from 'rc-form';
+import {UnauthorizedError} from 'entity/common';
 import {errorAction} from '@medux/react-web-router';
 
 interface Props extends DispatchProp, RCForm {
