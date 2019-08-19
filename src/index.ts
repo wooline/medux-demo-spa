@@ -1,7 +1,7 @@
 import 'Global';
 
-import {history, routeConfig} from 'modules';
-
 import {buildApp} from '@medux/react-web-router';
+import {createBrowserHistory} from 'history';
+import {routeConfig} from 'modules';
 
-buildApp(moduleGetter, 'app', history, routeConfig);
+buildApp(moduleGetter, 'app', createBrowserHistory(), routeConfig);

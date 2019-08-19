@@ -5,12 +5,11 @@ import {RootState, actions} from 'modules';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';
-import {RouteData} from '@medux/react-web-router';
 import {RouteParams} from '../../meta';
 import Search from 'components/Search';
 
 interface StateProps {
-  routeData: RouteData;
+  routeData: BaseRouteData;
   showSearch: boolean;
   listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;

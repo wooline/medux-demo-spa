@@ -6,12 +6,11 @@ import {ListItem, ListSummary} from 'entity/comment';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
 import {RootState} from 'modules';
-import {RouteData} from '@medux/react-web-router';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 
 interface StateProps {
-  routeData: RouteData;
+  routeData: BaseRouteData;
   listSearch: RouteParams['listSearch'];
   listItems: ListItem[] | undefined;
   listSummary: ListSummary | undefined;
