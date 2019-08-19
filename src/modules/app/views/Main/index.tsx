@@ -1,7 +1,6 @@
 import 'asset/css/global.less';
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {RootState, actions, moduleGetter} from 'modules';
 
@@ -10,13 +9,11 @@ import Loading from '../Loading';
 import {LoadingState} from '@medux/react-web-router';
 import LoginPop from '../LoginPop';
 import {Modal} from 'antd-mobile';
-import {ModuleNames} from 'modules/names';
 import NotFound from 'components/NotFound';
 import React from 'react';
 import {StartupStep} from 'entity/global';
 import TopNav from '../TopNav';
 import Welcome from '../Welcome';
-import {loadView} from '@medux/react';
 
 const photosDetails = loadView(moduleGetter, 'photos', 'Details');
 const photosList = loadView(moduleGetter, 'photos', 'List');
@@ -42,7 +39,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
   public render() {
     const {showLoginPop, showNotFoundPop, startupStep, globalLoading} = this.props;
     return (
-      <div className={ModuleNames.app}>
+      <div className={moduleNames.app}>
         {startupStep !== StartupStep.init && (
           <div className="g-page">
             <TopNav />
@@ -81,4 +78,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

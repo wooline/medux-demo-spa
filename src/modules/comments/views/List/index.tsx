@@ -1,15 +1,12 @@
 /* eslint-disable react/no-find-dom-node */
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import {ListItem, ListSummary} from 'entity/comment';
-import {ViewNames, historyActions} from 'common/route';
 
-import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
 import {RootState} from 'modules';
-import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteData} from '@medux/react-web-router';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 
@@ -32,7 +29,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const dom = findDOMNode(this) as HTMLElement;
     scrollTop = (dom.parentNode as HTMLDivElement).scrollTop;
     const {routeData} = this.props;
-    const paths = routeData.paths.slice(0, -1).concat(ViewNames.commentsDetails);
+    const paths = routeData.paths.slice(0, -1).concat(viewNames.commentsDetails);
     historyActions.push({extend: routeData, paths, params: {comments: {itemId}}});
   };
 
@@ -40,7 +37,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {listSearch, listItems, listSummary} = this.props;
     if (listItems) {
       return (
-        <div className={`${ModuleNames.comments}-List`}>
+        <div className={`${moduleNames.comments}-List`}>
           <div className="list-header">
             <div onClick={() => this.onSortChange(false)} className={listSearch.isNewest ? '' : 'on'}>
               最热
@@ -101,4 +98,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

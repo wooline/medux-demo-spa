@@ -1,17 +1,13 @@
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import {RootState, moduleGetter} from 'modules';
 import {Route, Switch} from 'react-router-dom';
-import {ViewNames, historyActions} from 'common/route';
 
 import {ItemDetail} from 'entity/video';
 import {Icon as MIcon} from 'antd-mobile';
-import {ModuleNames} from 'modules/names';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
-import {loadView} from '@medux/react';
 
 const commentsMain = loadView(moduleGetter, 'comments', 'Main');
 
@@ -22,14 +18,14 @@ interface StateProps {
 
 class Component extends React.PureComponent<StateProps & DispatchProp> {
   private onClose = () => {
-    historyActions.push({paths: [ViewNames.appMain, ViewNames.videosList], params: {videos: {...this.props.routeParams, itemId: ''}}});
+    historyActions.push({paths: [viewNames.appMain, viewNames.videosList], params: {videos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {
     const {itemDetail} = this.props;
     if (itemDetail) {
       return (
-        <div className={`${ModuleNames.videos}-Details g-details g-doc-width g-modal g-enter-in`}>
+        <div className={`${moduleNames.videos}-Details g-details g-doc-width g-modal g-enter-in`}>
           <div className="subject">
             <h2 />
             <span onClick={this.onClose} className="close-button">
@@ -77,4 +73,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

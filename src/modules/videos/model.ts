@@ -1,9 +1,6 @@
-import {ActionTypes, BaseModelHandlers, effect} from '@medux/react-web-router';
+import {ActionTypes, BaseModelHandlers, BaseModelState, effect} from '@medux/react-web-router';
 import {ItemDetail, ListItem, ListSearch, ListSummary} from 'entity/video';
 
-import {BaseModelState} from '@medux/react-web-router/types/export';
-import {ModuleNames} from 'modules/names';
-import {RootState} from 'modules';
 import {RouteParams} from './meta';
 import api from './api';
 import {simpleEqual} from 'common/utils';
@@ -38,7 +35,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   // 同时监听初始化INIT和路由变化的action
   // 参数 null 表示不需要监控loading状态，searchList时会监控loading
   @effect(null)
-  protected async [`${ModuleNames.videos}/${ActionTypes.MInit},${ActionTypes.RouteChange}`]() {
+  protected async [`${moduleNames.videos}/${ActionTypes.MInit},${ActionTypes.RouteChange}`]() {
     if (this.rootState.route.data.views.videos) {
       const {
         views,

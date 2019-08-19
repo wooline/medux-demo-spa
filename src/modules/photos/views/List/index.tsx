@@ -1,15 +1,12 @@
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
 import {ListItem, ListSummary} from 'entity/photo';
 import {RootState, actions} from 'modules';
-import {ViewNames, historyActions} from 'common/route';
 
-import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
-import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteData} from '@medux/react-web-router';
 import {RouteParams} from '../../meta';
 import Search from 'components/Search';
 
@@ -40,7 +37,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     // 记住当前滚动位置
     scrollTop = window.pageYOffset;
     const {routeData} = this.props;
-    const paths = routeData.paths.slice(0, -1).concat(ViewNames.photosDetails);
+    const paths = routeData.paths.slice(0, -1).concat(viewNames.photosDetails);
     historyActions.push({extend: routeData, paths, params: {photos: {itemId}}});
   };
 
@@ -48,7 +45,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {showSearch, listSearch, listItems, listSummary} = this.props;
     if (listSearch && listItems) {
       return (
-        <div className={`${ModuleNames.photos}-List g-pic-list`}>
+        <div className={`${moduleNames.photos}-List g-pic-list`}>
           <Search value={listSearch.title} onClose={this.onSearchClose} onSearch={this.onSearch} visible={showSearch} />
           <div className="list-items">
             {listItems.map(item => (
@@ -108,4 +105,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

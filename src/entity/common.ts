@@ -1,12 +1,18 @@
-export interface ErrorType<Code = any, Detail = null> {
-  code: Code;
-  message: string;
+export type CommonErrorCode = 'unknown' | 'notFound' | 'unauthorized' | 'redirect';
+
+export interface ErrorEntity<Detail = any> {
+  code: string;
+  message?: string;
   detail?: Detail;
 }
 
-export interface DefaultResult<Data = any, Error extends ErrorType = ErrorType> {
+export class CustomError<Detail = any> {
+  public constructor(public code: string, public message?: string, public detail?: Detail) {}
+}
+
+export interface Result<Data, Error extends ErrorEntity> {
   data: Data;
-  error: Error | null;
+  error?: Error;
 }
 
 export interface BaseListSummary {

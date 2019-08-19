@@ -1,6 +1,5 @@
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import {Icon, NavBar} from 'antd-mobile';
 import {RootState, actions} from 'modules';
 
@@ -43,4 +42,4 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

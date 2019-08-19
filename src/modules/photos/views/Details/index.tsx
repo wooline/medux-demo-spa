@@ -1,18 +1,14 @@
 import './index.less';
 
 import {Carousel, Icon as MIcon} from 'antd-mobile';
-import {DispatchProp, connect} from 'react-redux';
 import Icon, {IconClass} from 'components/Icon';
 import {RootState, moduleGetter} from 'modules';
 import {Route, Switch} from 'react-router-dom';
-import {ViewNames, historyActions} from 'common/route';
 
 import {ItemDetail} from 'entity/photo';
-import {ModuleNames} from 'modules/names';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
-import {loadView} from '@medux/react';
 
 const commentsMain = loadView(moduleGetter, 'comments', 'Main');
 
@@ -45,18 +41,18 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
     const itemId = itemDetail!.id;
     if (showComment) {
       historyActions.push({
-        paths: [ViewNames.appMain, ViewNames.photosDetails],
+        paths: [viewNames.appMain, viewNames.photosDetails],
         params: {photos: {...this.props.routeParams, itemId}},
       });
     } else {
       historyActions.push({
-        paths: [ViewNames.appMain, ViewNames.photosDetails, ViewNames.commentsMain, ViewNames.commentsList],
+        paths: [viewNames.appMain, viewNames.photosDetails, viewNames.commentsMain, viewNames.commentsList],
         params: {photos: {...this.props.routeParams}, comments: {articleType: 'photos', articleId: itemId}},
       });
     }
   };
   private onClose = () => {
-    historyActions.push({paths: [ViewNames.appMain, ViewNames.photosList], params: {photos: {...this.props.routeParams, itemId: ''}}});
+    historyActions.push({paths: [viewNames.appMain, viewNames.photosList], params: {photos: {...this.props.routeParams, itemId: ''}}});
   };
 
   public render() {
@@ -64,7 +60,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
     const {moreDetail} = this.state;
     if (itemDetail) {
       return (
-        <div className={`${ModuleNames.photos}-Details g-details g-doc-width g-modal g-enter-in`}>
+        <div className={`${moduleNames.photos}-Details g-details g-doc-width g-modal g-enter-in`}>
           <div className="subject">
             <h2>{itemDetail.title}</h2>
             <span className="close-button" onClick={this.onClose}>
@@ -136,4 +132,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);

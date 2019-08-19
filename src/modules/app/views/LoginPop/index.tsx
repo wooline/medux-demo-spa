@@ -1,7 +1,6 @@
 import './index.less';
 
 import {Button, InputItem, List, Toast} from 'antd-mobile';
-import {DispatchProp, connect} from 'react-redux';
 
 import {LoginRequest} from 'entity/session';
 import {RCForm} from 'entity/common';
@@ -68,4 +67,4 @@ class Component extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(createForm()(Component));
+export default reduxConnect()(createForm()(Component));

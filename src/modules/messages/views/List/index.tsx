@@ -1,16 +1,13 @@
 import './index.less';
 
-import {DispatchProp, connect} from 'react-redux';
 import {ListItem, ListSummary} from 'entity/message';
 import {RootState, actions} from 'modules';
 
-import {ModuleNames} from 'modules/names';
 import {Pagination} from 'antd-mobile';
 import React from 'react';
-import {RouteData} from '@medux/react-web-router/types/export';
+import {RouteData} from '@medux/react-web-router';
 import {RouteParams} from '../../meta';
 import Search from 'components/Search';
-import {historyActions} from 'common/route';
 
 interface StateProps {
   routeData: RouteData;
@@ -41,7 +38,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 
     if (listItems && listSearch) {
       return (
-        <div className={`${ModuleNames.messages}-List`}>
+        <div className={`${moduleNames.messages}-List`}>
           <Search value={listSearch.title} onClose={this.onSearchClose} onSearch={this.onSearch} visible={showSearch} />
           <div className="list-items">
             {listItems.map(item => (
@@ -76,4 +73,4 @@ const mapStateToProps: (state: RootState) => StateProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Component);
+export default reduxConnect(mapStateToProps)(Component);
