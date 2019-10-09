@@ -1,12 +1,11 @@
 /* eslint-disable react/no-find-dom-node */
-import './index.less';
-
 import {ListItem, ListSummary} from 'entity/comment';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
+import style from './index.m.less';
 
 interface StateProps {
   routeData: BaseRouteData;
@@ -35,7 +34,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {listSearch, listItems, listSummary} = this.props;
     if (listItems) {
       return (
-        <div className={`${moduleNames.comments}-List`}>
+        <div className={style.root}>
           <div className="list-header">
             <div onClick={() => this.onSortChange(false)} className={listSearch.isNewest ? '' : 'on'}>
               最热

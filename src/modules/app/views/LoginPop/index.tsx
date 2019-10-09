@@ -1,10 +1,9 @@
-import './index.less';
-
 import {Button, InputItem, List, Toast} from 'antd-mobile';
 import {RCForm, createForm} from 'rc-form';
 
 import {LoginRequest} from 'entity/common';
 import React from 'react';
+import style from './index.m.less';
 
 interface Props extends RCForm, DispatchProp {}
 
@@ -47,7 +46,7 @@ class Component extends React.PureComponent<Props> {
     });
 
     return (
-      <div className="app-LoginPop">
+      <div className={style.root}>
         <List className="bd">
           <InputItem {...usernameDecorator} clear={true} placeholder="用户名" />
           <InputItem {...passwordDecorator} clear={true} placeholder="密码" type="password" />

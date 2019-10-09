@@ -1,10 +1,9 @@
 /* eslint-disable react/no-find-dom-node */
-import './index.less';
-
 import {ItemDetail} from 'entity/comment';
 import {Icon as MIcon} from 'antd-mobile';
 import React from 'react';
 import {findDOMNode} from 'react-dom';
+import style from './index.m.less';
 
 interface StateProps {
   itemDetail: ItemDetail | undefined;
@@ -19,7 +18,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {itemDetail} = this.props;
     if (itemDetail) {
       return (
-        <div className={`${moduleNames.comments}-Details g-modal g-enter-in`}>
+        <div className={`${style.root} g-modal g-enter-in`}>
           <div className="list-header">
             <div onClick={this.onBack} className="close-button">
               <MIcon size="md" type="left" />

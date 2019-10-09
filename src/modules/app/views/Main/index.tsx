@@ -1,5 +1,4 @@
 import 'asset/css/global.less';
-import './index.less';
 
 import {Redirect, Route, Switch} from 'react-router-dom';
 
@@ -13,6 +12,7 @@ import React from 'react';
 import {StartupStep} from 'entity/global';
 import TopNav from '../TopNav';
 import Welcome from '../Welcome';
+import style from './index.m.less';
 
 const photosDetails = loadView('photos', 'Details');
 const photosList = loadView('photos', 'List');
@@ -38,7 +38,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
   public render() {
     const {showLoginPop, showNotFoundPop, startupStep, globalLoading} = this.props;
     return (
-      <div className={moduleNames.app}>
+      <div className={style.root}>
         {startupStep !== StartupStep.init && (
           <div className="g-page">
             <TopNav />

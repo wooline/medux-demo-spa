@@ -1,5 +1,3 @@
-import './index.less';
-
 import {Carousel, Icon as MIcon} from 'antd-mobile';
 import Icon, {IconClass} from 'components/Icon';
 import {Route, Switch} from 'react-router-dom';
@@ -8,6 +6,7 @@ import {ItemDetail} from 'entity/photo';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
+import style from './index.m.less';
 
 const commentsMain = loadView('comments', 'Main');
 
@@ -59,7 +58,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp, State> {
     const {moreDetail} = this.state;
     if (itemDetail) {
       return (
-        <div className={`${moduleNames.photos}-Details g-details g-doc-width g-modal g-enter-in`}>
+        <div className={`${style.root} g-details g-doc-width g-modal g-enter-in`}>
           <div className="subject">
             <h2>{itemDetail.title}</h2>
             <span className="close-button" onClick={this.onClose}>

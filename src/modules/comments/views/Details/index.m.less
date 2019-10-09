@@ -1,0 +1,31 @@
+.root {
+  &:global(.g-modal) {
+    :global {
+      .list-header {
+        .close-button {
+          display: flex;
+          align-items: center;
+        }
+      }
+      .list-items {
+        > div:first-child {
+          background: #eee;
+          margin: 0;
+          padding-left: 60px;
+          padding-right: 10px;
+          .user {
+            font-weight: bold;
+          }
+
+          .avatar {
+            left: 10px;
+          }
+        }
+
+        > * {
+          margin: 0 20px;
+        }
+      }
+    }
+  }
+}

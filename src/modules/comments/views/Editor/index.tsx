@@ -1,11 +1,10 @@
-import './index.less';
-
 import {Button, InputItem, Toast} from 'antd-mobile';
 import {RCForm, createForm} from 'rc-form';
 
 import React from 'react';
 import {UnauthorizedError} from 'entity/common';
 import {errorAction} from '@medux/react-web-router';
+import style from './index.m.less';
 
 interface Props extends DispatchProp, RCForm {
   hasLogin: boolean;
@@ -50,7 +49,7 @@ class Component extends React.PureComponent<Props> {
       ],
     });
     return commentId ? (
-      <div className={`${moduleNames.comments}-Editor`}>
+      <div className={style.root}>
         <div className="input">
           <InputItem placeholder="我来说两句..." {...content} />
         </div>
