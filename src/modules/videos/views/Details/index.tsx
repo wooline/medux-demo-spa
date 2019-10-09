@@ -8,7 +8,7 @@ import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
 
-const commentsMain = loadView(moduleGetter, 'comments', 'Main');
+const commentsMain = loadView('comments', 'Main');
 
 interface StateProps {
   routeParams: RouteParams;

@@ -3,7 +3,7 @@ import './index.less';
 import {Button, InputItem, List, Toast} from 'antd-mobile';
 import {RCForm, createForm} from 'rc-form';
 
-import {LoginRequest} from 'entity/session';
+import {LoginRequest} from 'entity/common';
 import React from 'react';
 
 interface Props extends RCForm, DispatchProp {}

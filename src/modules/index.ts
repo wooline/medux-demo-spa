@@ -1,7 +1,6 @@
-import {RootState as BaseState, RouteConfig, ToBrowserUrl, getBrowserHistoryActions, setRouteConfig, toBrowserUrl} from '@medux/react-web-router';
+import {LoadView as BaseLoadView, RootState as BaseState, RouteConfig, exportActions, getBrowserHistory, setRouteConfig} from '@medux/react-web-router';
 
 import {defaultRouteParams as comments} from 'modules/comments/meta';
-import {exportActions} from '@medux/react-web-router';
 import {defaultRouteParams as messages} from 'modules/messages/meta';
 import {defaultRouteParams as photos} from 'modules/photos/meta';
 import {defaultRouteParams as videos} from 'modules/videos/meta';
@@ -45,7 +44,9 @@ export const actions = exportActions(moduleGetter);
 
 export type RootState = BaseState<typeof moduleGetter>;
 
-export const historyActions = getBrowserHistoryActions<RootState['route']['data']['params']>();
+export type LoadView = BaseLoadView<typeof moduleGetter, React.ComponentType<any>>;
+
+export const {historyActions, toUrl} = getBrowserHistory<RootState['route']['data']['params']>();
 
 export enum viewNames {
   appMain = 'app.Main',
@@ -93,5 +94,3 @@ export const routeConfig: RouteConfig = {
     },
   ],
 };
-
-export const toUrl: ToBrowserUrl<RootState['route']['data']['params']> = toBrowserUrl;

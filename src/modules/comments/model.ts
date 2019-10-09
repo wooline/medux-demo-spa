@@ -3,7 +3,6 @@ import {ItemCreateData, ItemDetail, ListItem, ListSearch, ListSummary} from 'ent
 import {extract, pickEqual} from 'common/utils';
 
 import {RouteParams} from './meta';
-import {Toast} from 'antd-mobile';
 import api from './api';
 
 // 定义本模块的State类型
@@ -40,19 +39,15 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
 
   @effect()
   public async createItem(data: ItemCreateData) {
-    const response = await api.createItem(data);
-    if (!response.error) {
-      Toast.info('操作成功');
-      // 如果创建成功，要让用户看到自已发表的评论，必须刷新列表，以创建时间排序
-      const routeData = this.rootState.route.data;
-      const views = routeData.views;
-      if (views.comments && views.comments.List) {
-        await this.dispatch(this.actions.searchList({isNewest: true, page: 1}));
-      } else if (views.comments && views.comments.Details) {
-        await this.dispatch(this.actions.getItemDetail(this.state.itemDetail!.id));
-      }
-    } else {
-      Toast.info(response.error.message);
+    await api.createItem(data);
+    message.success('操作成功');
+    // 如果创建成功，要让用户看到自已发表的评论，必须刷新列表，以创建时间排序
+    const routeData = this.rootState.route.data;
+    const views = routeData.views;
+    if (views.comments && views.comments.List) {
+      await this.dispatch(this.actions.searchList({isNewest: true, page: 1}));
+    } else if (views.comments && views.comments.Details) {
+      await this.dispatch(this.actions.getItemDetail(this.state.itemDetail!.id));
     }
   }
 

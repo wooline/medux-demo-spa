@@ -4,6 +4,13 @@
   "rules": {
     "prettier/prettier": true,
     "no-descending-specificity": null,
-    "unit-case": null
+    "unit-case": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
   }
 }

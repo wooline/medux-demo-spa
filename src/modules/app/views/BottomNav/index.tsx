@@ -1,11 +1,10 @@
-import './index.less';
-
 import Icon, {IconClass} from 'components/Icon';
 
 import React from 'react';
 import {TabBar} from 'antd-mobile';
 import {UnauthorizedError} from 'entity/common';
 import {errorAction} from '@medux/react-web-router';
+import style from './index.m.less';
 import {uniqueKey} from 'common/utils';
 
 interface Props extends DispatchProp {
@@ -18,7 +17,7 @@ class Component extends React.PureComponent<Props> {
     const {views, dispatch} = this.props;
 
     return (
-      <div className="app-BottomNav g-doc-width">
+      <div className={`${style.root} g-doc-width`}>
         <TabBar noRenderContent={true} barTintColor="#108ee9" tintColor="#ff0" unselectedTintColor="#fff">
           <TabBar.Item
             icon={<Icon type={IconClass.PICTURE} />}

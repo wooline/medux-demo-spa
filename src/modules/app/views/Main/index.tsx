@@ -14,11 +14,11 @@ import {StartupStep} from 'entity/global';
 import TopNav from '../TopNav';
 import Welcome from '../Welcome';
 
-const photosDetails = loadView(moduleGetter, 'photos', 'Details');
-const photosList = loadView(moduleGetter, 'photos', 'List');
-const videosDetails = loadView(moduleGetter, 'videos', 'Details');
-const videosList = loadView(moduleGetter, 'videos', 'List');
-const messagesList = loadView(moduleGetter, 'messages', 'List');
+const photosDetails = loadView('photos', 'Details');
+const photosList = loadView('photos', 'List');
+const videosDetails = loadView('videos', 'Details');
+const videosList = loadView('videos', 'List');
+const messagesList = loadView('messages', 'List');
 
 interface StateProps {
   showLoginPop: boolean;

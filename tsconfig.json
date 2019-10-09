@@ -15,7 +15,7 @@
     "strict": true,
     "newLine": "LF",
     "lib": ["es2017", "dom"],
-    "types": ["./typings/rc-form"],
+    "types": ["./typings/rc-form", "./typings/images"],
     "removeComments": true,
     "jsx": "react",
     "resolveJsonModule": true,
@@ -28,5 +28,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

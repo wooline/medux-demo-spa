@@ -2,14 +2,12 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const path = require('path');
-const pathsConfig = require('./config/path.conifg');
+const pathsConfig = require('./path.conifg');
+const webpackConfig = require('./webpack.config');
+const devServerConfig = require('./webpackDevServer.config');
+const {server} = require(path.join(pathsConfig.envPath, './env'));
 
-const appPackage = require(path.join(pathsConfig.rootPath, './package.json'));
-
-const webpackConfig = require(path.join(pathsConfig.configPath, './webpack.config.dev'));
-const devServerConfig = require(path.join(pathsConfig.configPath, './webpackDevServer.config'));
-
-const [, , port] = appPackage.devServer.url.split(/:\/*/);
+const [, , port] = server.split(/:\/*/);
 
 webpackConfig.entry.unshift(`webpack-dev-server/client?http://0.0.0.0:${port}`, 'webpack/hot/dev-server');
 
@@ -26,7 +24,7 @@ devServer.listen(port, '0.0.0.0', error => {
     process.exit(1);
   }
   clearConsole();
-  console.info(chalk`...starting {red development server} on {green ${appPackage.devServer.url}/} \n`);
+  console.info(chalk`...starting {red development server} on {green ${server}/} \n`);
   return null;
 });
 ['SIGINT', 'SIGTERM'].forEach(sig => {

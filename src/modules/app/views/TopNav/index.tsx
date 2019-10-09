@@ -1,8 +1,7 @@
-import './index.less';
-
 import {Icon, NavBar} from 'antd-mobile';
 
 import React from 'react';
+import style from './index.m.less';
 
 interface Props extends DispatchProp {
   showSearch: boolean;
@@ -18,7 +17,7 @@ class Component extends React.PureComponent<Props> {
   public render() {
     const {logoUrl, avatarUrl} = this.props;
     return (
-      <div className="app-TopNav g-doc-width">
+      <div className={`${style.root} g-doc-width`}>
         <NavBar
           icon={<span className="avatar" style={{backgroundImage: `url(${avatarUrl})`}} />}
           rightContent={

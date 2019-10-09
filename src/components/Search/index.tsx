@@ -1,8 +1,7 @@
-import './index.less';
-
 import {Button, InputItem, Toast} from 'antd-mobile';
 
 import React from 'react';
+import style from './index.m.less';
 
 interface Props {
   onClose: () => void;
@@ -38,7 +37,7 @@ class Component extends React.PureComponent<Props, State> {
   public render() {
     const {visible} = this.props;
     return (
-      <div className={`${visible ? 'on ' : ''}comp-Search`}>
+      <div className={`${visible ? 'on ' : ''}${style.root}`}>
         <div className="wrap">
           <InputItem clear={true} onChange={this.onChange} placeholder="关键字..." value={this.state.value} />
           <Button size="small" type="primary" onClick={this.onSubmit}>

@@ -1,8 +1,7 @@
-import './index.less';
-
 import {StartupPageConfig, StartupStep} from 'entity/global';
 
 import React from 'react';
+import style from './index.m.less';
 
 interface Props extends DispatchProp {
   startupStep: StartupStep;
@@ -31,7 +30,7 @@ class Component extends React.PureComponent<Props> {
     const linkPops = linkUrl ? {target: '_blank', href: linkUrl} : {};
 
     return (
-      <div className={`${moduleNames.app}-Welcome g-doc-width g-pre-img ${className}`}>
+      <div className={`${style.root} g-doc-width g-pre-img ${className}`}>
         <a className="link" {...linkPops} style={{backgroundImage: `url(${imageUrl})`}} />
         <div
           className="count"

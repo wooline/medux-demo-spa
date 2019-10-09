@@ -1,7 +1,9 @@
+import {Toast} from 'antd-mobile';
+
 export type ExtractArray<T extends any[]> = T[Extract<keyof T, number>];
 export type OmitSelf<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export function extract<T, K extends keyof T, U extends K[], P extends ExtractArray<U>>(target: T, ...args: U): Pick<T, P> & {$: OmitSelf<T, P>} {
+export function extract<T, K extends keyof T, U extends K[]>(target: T, ...args: U): Pick<T, ExtractArray<U>> & {$: OmitSelf<T, ExtractArray<U>>} {
   const clone = {...target};
   const result: any = (args as string[]).reduce((prev, cur) => {
     prev[cur] = target[cur];
@@ -47,3 +49,12 @@ export function pickEqual<T, P extends T, K extends keyof T>(obj1: T, obj2: P, p
   }
   return true;
 }
+export const message = {
+  success: (content: string) => {
+    Toast.success(content);
+  },
+  error: (content: string) => {
+    Toast.fail(content);
+  },
+};
+export const metaKeys = {};

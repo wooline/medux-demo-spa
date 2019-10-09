@@ -1,4 +1,4 @@
-export type CommonErrorCode = 'unknown' | 'notFound' | 'unauthorized' | 'redirect';
+export type CommonErrorCode = 'unknown' | 'notFound' | '401' | '301';
 
 export interface ErrorEntity<Detail = any> {
   code: string;
@@ -11,21 +11,26 @@ export class CustomError<Detail = any> {
 }
 
 export class RedirectError extends CustomError {
-  public constructor(code: '301' | '302', detail: string) {
-    super('redirect', code, detail);
+  public constructor(url: string) {
+    super('301', '跳转中', url);
   }
 }
 export class UnauthorizedError extends CustomError {
   public constructor() {
-    super('请登录', '401');
+    super('401', '请登录');
   }
 }
-
-export interface Result<Data, Error extends ErrorEntity> {
-  data: Data;
-  error?: Error;
+export interface CurUser {
+  uid: string;
+  username: string;
+  hasLogin: boolean;
+  avatarUrl: string;
 }
-
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+export type LoginResponse = CurUser;
 export interface BaseListSummary {
   page: number;
   pageSize: number;

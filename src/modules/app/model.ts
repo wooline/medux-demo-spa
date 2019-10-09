@@ -1,12 +1,8 @@
-import * as sessionService from './api/session';
-import * as settingsService from './api/settings';
-
 import {ActionTypes, BaseModelHandlers, BaseModelState, LoadingState, effect, reducer} from '@medux/react-web-router';
+import {CurUser, CustomError} from 'entity/common';
 import {ProjectConfig, StartupStep} from 'entity/global';
 
-import {CurUser} from 'entity/session';
-import {CustomError} from 'entity/common';
-import {Toast} from 'antd-mobile';
+import api from './api';
 
 // 定义本模块的State类型
 export interface State extends BaseModelState {
@@ -40,7 +36,7 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     return {...this.state, startupStep};
   }
   @reducer
-  protected putCurUser(curUser: CurUser): State {
+  public putCurUser(curUser: CurUser): State {
     return {...this.state, curUser};
   }
   @reducer
@@ -57,13 +53,8 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
   }
   @effect('login') // 使用自定义loading状态
   public async login(payload: {username: string; password: string}) {
-    const loginResult = await sessionService.api.login(payload);
-    if (!loginResult.error) {
-      this.updateState({curUser: loginResult.data});
-      Toast.success('欢迎您回来！');
-    } else {
-      alert(loginResult.error.message);
-    }
+    const curUser = await api.login(payload);
+    this.dispatch(this.actions.putCurUser(curUser));
   }
 
   // effect执行错误会触发@@framework/ERROR，监听并发送给后台
@@ -77,14 +68,14 @@ export class ModelHandlers extends BaseModelHandlers<State, RootState> {
     } else if (error.code === '301' || error.code === '302') {
       historyActions.replace(error.detail);
     } else {
-      error.message && Toast.fail(error.message);
-      await settingsService.api.reportError(error);
+      error.message && message.error(error.message);
+      api.reportError(error);
     }
   }
   // 监听自已的INIT Action，做一些异步数据请求，不需要手动触发，所以请使用protected或private
   @effect()
   protected async [`this/${ActionTypes.MInit}`]() {
-    const [projectConfig, curUser] = await Promise.all([settingsService.api.getSettings(), sessionService.api.getCurUser()]);
+    const [projectConfig, curUser] = await Promise.all([api.getSettings(), api.getCurUser()]);
     this.updateState({
       projectConfig,
       curUser,

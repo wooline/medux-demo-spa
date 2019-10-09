@@ -5,8 +5,8 @@ import {Route, Switch} from 'react-router-dom';
 import Editor from '../Editor';
 import React from 'react';
 
-const Details = loadView(moduleGetter, 'comments', 'Details');
-const List = loadView(moduleGetter, 'comments', 'List');
+const Details = loadView('comments', 'Details');
+const List = loadView('comments', 'List');
 
 class Component extends React.PureComponent<{}> {
   public render() {

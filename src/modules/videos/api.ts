@@ -10,15 +10,15 @@ export class API {
     }
     return request<{listItems: ListItem[]; listSummary: ListSummary}>('get', '/ajax/videos', listSearch).then(reslut => {
       reslut.listItems.forEach(item => {
-        item.coverUrl = initEnv.clientPublicPath + item.coverUrl;
+        item.coverUrl = initEnv.staticPath + item.coverUrl;
       });
       return reslut;
     });
   }
   public getItemDetail(id: string) {
     return request<ItemDetail>('get', '/ajax/videos/:id', {id}).then(reslut => {
-      reslut.coverUrl = initEnv.clientPublicPath + reslut.coverUrl;
-      reslut.videoUrl = initEnv.clientPublicPath + reslut.videoUrl;
+      reslut.coverUrl = initEnv.staticPath + reslut.coverUrl;
+      reslut.videoUrl = initEnv.staticPath + reslut.videoUrl;
       return reslut;
     });
   }
