@@ -1,11 +1,10 @@
-import './index.less';
-
 import {ListItem, ListSummary} from 'entity/message';
 
 import {Pagination} from 'antd-mobile';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import Search from 'components/Search';
+import style from './index.m.less';
 
 interface StateProps {
   routeData: BaseRouteData;
@@ -36,7 +35,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
 
     if (listItems && listSearch) {
       return (
-        <div className={`${moduleNames.messages}-List`}>
+        <div className={style.root}>
           <Search value={listSearch.title} onClose={this.onSearchClose} onSearch={this.onSearch} visible={showSearch} />
           <div className="list-items">
             {listItems.map(item => (

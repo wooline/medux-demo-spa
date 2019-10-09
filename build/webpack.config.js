@@ -57,6 +57,7 @@ const lessLoader = enableCssModule => {
       loader: 'less-loader',
       options: {
         javascriptEnabled: true,
+        modifyVars: {hd: '0.026666rem'},
       },
     },
     {

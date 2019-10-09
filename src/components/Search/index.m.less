@@ -1,19 +1,16 @@
-.root {
-  overflow: hidden;
-  height: 1px;
-  transition: height 0.3s;
-  &:global(.on) {
-    height: 40px;
-  }
-  :global {
+:global {
+  :local(.root) {
+    overflow: hidden;
+    height: 1px;
+    transition: height 0.3s;
+    &.on {
+      height: 40px;
+    }
     .wrap {
       justify-content: space-between;
       background: #eee;
       display: flex;
       padding: 5px;
-    }
-    &.aaa {
-      color: red;
     }
     .am-input-item {
       height: 30px;

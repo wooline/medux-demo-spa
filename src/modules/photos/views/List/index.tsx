@@ -1,5 +1,3 @@
-import './index.less';
-
 import Icon, {IconClass} from 'components/Icon';
 import {ListItem, ListSummary} from 'entity/photo';
 
@@ -7,6 +5,7 @@ import {Pagination} from 'antd-mobile';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import Search from 'components/Search';
+import style from './index.m.less';
 
 interface StateProps {
   routeData: BaseRouteData;
@@ -43,7 +42,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {showSearch, listSearch, listItems, listSummary} = this.props;
     if (listSearch && listItems) {
       return (
-        <div className={`${moduleNames.photos}-List g-pic-list`}>
+        <div className={`${style.root} g-pic-list`}>
           <Search value={listSearch.title} onClose={this.onSearchClose} onSearch={this.onSearch} visible={showSearch} />
           <div className="list-items">
             {listItems.map(item => (

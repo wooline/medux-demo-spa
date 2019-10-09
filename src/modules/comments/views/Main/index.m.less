@@ -1,15 +1,16 @@
-.root {
-  height: 100%;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  > :global(.wrap) {
-    padding: 10px 0;
-    flex: 1 1 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  :global {
+:global {
+  :local(.root) {
+    height: 100%;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    > .wrap {
+      padding: 10px 0;
+      flex: 1 1 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
     .list-header {
       color: #666;
       padding: 10px 15px;

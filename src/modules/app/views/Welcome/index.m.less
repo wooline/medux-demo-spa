@@ -1,16 +1,17 @@
-.root {
-  display: block;
-  position: fixed;
-  z-index: 1000;
-  height: 100%;
-  top: 0;
-  overflow: hidden;
-  transition: transform 0.8s ease;
+:global {
+  :local(.root) {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    height: 100%;
+    top: 0;
+    overflow: hidden;
+    transition: transform 0.8s ease;
 
-  &:global(.startupCountEnd) {
-    transform: translateY(-100%);
-  }
-  :global {
+    &.startupCountEnd {
+      transform: translateY(-100%);
+    }
+
     .count {
       cursor: pointer;
       position: absolute;

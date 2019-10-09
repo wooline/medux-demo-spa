@@ -1,5 +1,3 @@
-import './index.less';
-
 import {Route, Switch} from 'react-router-dom';
 
 import {ItemDetail} from 'entity/video';
@@ -7,6 +5,7 @@ import {Icon as MIcon} from 'antd-mobile';
 import React from 'react';
 import {RouteParams} from '../../meta';
 import {findDOMNode} from 'react-dom';
+import style from './index.m.less';
 
 const commentsMain = loadView('comments', 'Main');
 
@@ -24,7 +23,7 @@ class Component extends React.PureComponent<StateProps & DispatchProp> {
     const {itemDetail} = this.props;
     if (itemDetail) {
       return (
-        <div className={`${moduleNames.videos}-Details g-details g-doc-width g-modal g-enter-in`}>
+        <div className={`${style.root} g-details g-doc-width g-modal g-enter-in`}>
           <div className="subject">
             <h2 />
             <span onClick={this.onClose} className="close-button">

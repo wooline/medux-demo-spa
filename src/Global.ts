@@ -45,4 +45,4 @@ declare global {
   Object.keys(data).forEach(key => {
     window[key] = data[key];
   });
-})({actions, moduleNames, toUrl, historyActions, message});
+})({actions, moduleNames, viewNames, toUrl, historyActions, message});
