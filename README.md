@@ -29,7 +29,7 @@ npm install
 npm start
 ```
 
-## 运行
+## 运行2
 
 - `npm start` 以开发模式运行
 - `npm run build` 编译生成文件
